@@ -123,12 +123,16 @@ public class Othelo
         return mv;
     }
     
-    public void updateBoard(int[] move){
-        
+    public void updateBoard(String piece, int[] move){
+        board[move[0]][move[1]] = piece;
     }
     
     public boolean fullBoard(){
-     
+        for(int i=0;i<board[0].length;i++){
+            for(int j=0;j<board[0].length;j++){
+                if(board[i][j] == " ") return false;
+            }
+        }
         return true;
     }
     
