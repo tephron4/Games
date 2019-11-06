@@ -119,7 +119,12 @@ public class Othelo
     
     public int[] getMove(){
         int[] mv = new int[2];
-        
+        if(turn.equals(this.oh.piece)){
+            mv = this.oh.oPlay(board);
+        }
+        if(turn.equals(this.oc.piece)){
+            mv = this.oc.oPlay(board,this.oc.piece,this.oh.piece);
+        }
         return mv;
     }
     
@@ -136,18 +141,26 @@ public class Othelo
         return true;
     }
     
-    public boolean hasWinner(){
-        
-        return false;
+    public String winner(){
+        int hScore = score(board, this.oh.piece);
+        int cScore = score(board, this.oc.piece);
+        if(hScore > cScore) return "human";
+        if(cScore > hScore) return "computer";
+        else return "tie";
     }
     
-    public boolean hasWon(String piece){
-        
-        return false;
+    public int score(String[][] board, String piece){
+        int count = 0;
+        for(int i=0;i<board[0].length;i++){
+            for(int j=0;j<board[0].length;j++){
+                if(board[i][j] == piece) count++; 
+            }
+        }
+        return count;
     }
     
     public boolean validMove(int[] move){
-        
+        if(board[move[0]][move[1]] != " ") return false;
         return true;
     }
 }

@@ -63,7 +63,7 @@ public class Human
         return mv;
     }
     
-    public int[] oPlay(){
+    public int[] oPlay(String[][] board){
         int[] mv = new int[2];
         boolean gettingMove = true;
         while(gettingMove){
@@ -94,12 +94,20 @@ public class Human
                 System.out.println("Please give a valid input");
                 continue;
             }
+            if(!validMove(board,mv)){
+                System.out.println("Not a valid move");
+                continue;
+            }
         }
         return mv;
     }
     
     public boolean validMove(String[] board, int move){
         if(board[move].equals(" ")) return true;
+        return false;
+    }
+    public boolean validMove(String[][] board, int[] move){
+        if(board[move[0]][move[1]].equals(" ")) return true;
         return false;
     }
     
