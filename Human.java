@@ -52,13 +52,48 @@ public class Human
                 answer = Integer.parseInt(ans);
             }
             catch(NumberFormatException e){
-                System.out.print('\u000C');
+                System.out.println("Please git a valid input");
                 continue;
             }
             if(answer == 7 || answer == 8 || answer == 9) mv = answer - 7;
             else if(answer == 4 || answer == 5 || answer == 6) mv = answer - 1;
             else if(answer == 1 || answer == 2 || answer == 3) mv = answer + 5;
             gettingMove = false;
+        }
+        return mv;
+    }
+    
+    public int[] oPlay(){
+        int[] mv = new int[2];
+        boolean gettingMove = true;
+        while(gettingMove){
+            mv = new int[2];
+            System.out.println("");
+            System.out.println("Where do you want to move?");
+            String ans = sc.next();
+            String row = "";
+            String column = "";
+            int a = -1;
+            if(ans.length() < 2 || ans.length() > 4){
+                System.out.println("Please give a valid input");
+                continue;
+            }
+            if(ans.toLowerCase().equals("quit")){
+                mv[0] = 21;
+                mv[1] = 21;
+                gettingMove = false;
+                continue;
+            }
+            try{
+                row = ans.substring(0,1);
+                column = ans.substring(1,2);
+                mv[0] = Integer.parseInt(row);
+                mv[1] = Integer.parseInt(column);
+            }
+            catch(NumberFormatException e){
+                System.out.println("Please give a valid input");
+                continue;
+            }
         }
         return mv;
     }
