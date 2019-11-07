@@ -5,6 +5,7 @@
  * @author (your name)
  * @version (a version number or a date)
  */
+import java.util.*;
 public class Computer
 {
     String piece;
@@ -32,14 +33,15 @@ public class Computer
         int highScore = 0;
         int bestRow = -1;
         int bestCol = -1;
-        String[][] boardCopy;
-        Othelo o = new Othelo(new Human(), new Computer(cPiece));
+        String[][] boardCopy = board;
+        Othelo o = new Othelo(new Human(), new Computer(cPiece), boardCopy);
         for(int row=0;row<board[0].length;row++){
-            boardCopy = board;
             for(int col=0;col<board[0].length;col++){
+                o.setBoard(boardCopy);
                 if(validMove(board, row, col)){
-                    boardCopy = o.updateBoard(boardCopy, piece, new int[]{row,col});
-                    int score = o.score(board,cPiece);
+                    o.updateBoard(piece, new int[]{row,col});
+                    int score = o.score(cPiece);
+                    System.out.println("possible score: " + score + "; current best score: " + highScore);
                     if(score > highScore){
                         highScore = score;
                         bestRow = row;
@@ -48,6 +50,9 @@ public class Computer
                 }
             }
         }
+        System.out.println("Computer is moving to [" + bestRow + "," + bestCol + "]");
+        Scanner s = new Scanner(System.in);
+        String a = s.next();
         move = new int[]{bestRow,bestCol};
         return move;
     }

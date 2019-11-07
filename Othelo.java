@@ -14,9 +14,18 @@ public class Othelo
     Computer oc;
     String turn = "";
     
-    public Othelo(Human oh, Computer oc){
+    public Othelo(Human oh, Computer oc, String[][] board){
         this.oh = oh;
         this.oc = oc;
+        this.board = board;
+    }
+    
+    public String[][] getBoard(){
+        return this.board;
+    }
+    
+    public void setBoard(String[][] b){
+        this.board = b;
     }
     
     public void play(){
@@ -28,14 +37,14 @@ public class Othelo
             boolean inGame = true;
             this.oh.played("o");
             while(inGame){
-                switchTurn();
+                this.switchTurn();
                 if(turn.equals(this.oh.piece)){
-                    printBoard(board);
+                    this.printBoard();
                 }   
                 boolean moving = true;
                 int[] move = new int[2];
                 while(moving){
-                    move = getMove();
+                    move = this.getMove();
                     if(move[0] == 21){
                         System.out.println("Are you sure you want to quit? (yes/no)");
                         String ans = s.next().toLowerCase();
@@ -46,11 +55,11 @@ public class Othelo
                     }   
                     moving = false;
                 }   
-                board = updateBoard(board, turn, move);
-                if(fullBoard()){
-                    System.out.print('\u000C');
-                    printBoard(board);
-                    String winner = winner();
+                this.updateBoard(turn, move);
+                if(this.fullBoard()){
+                    //System.out.print('\u000C');
+                    this.printBoard();
+                    String winner = this.winner();
                     if(winner.equals("human")){
                         this.oh.won("o");
                         System.out.println("You won!");
@@ -69,13 +78,13 @@ public class Othelo
             }
             this.oh.printStats("o");
             if(!playAgain()){
-                System.out.print('\u000C');
+                //System.out.print('\u000C');
                 System.out.println("Thanks for playing " + this.oh.getUsername() + "!");
                 playing = false;
                 continue;
             }   
             turn = "";
-            System.out.print('\u000C');
+            //System.out.print('\u000C');
         }
     }
     
@@ -88,16 +97,16 @@ public class Othelo
     }
     
     public void initializeBoard(){
-        for(int i=0;i<board[0].length;i++){
-            for(int j=0;j<board[0].length;j++){
+        for(int i=0;i<this.board[0].length;i++){
+            for(int j=0;j<this.board[0].length;j++){
                 if((i==4&j==4)||(i==5&&j==5)){
-                    board[i][j] = "X";
+                    this.board[i][j] = "X";
                 }   
                 else if((i==4&j==5)||(i==5&&j==4)){
-                    board[i][j] = "O";
+                    this.board[i][j] = "O";
                 }
                 else{
-                    board[i][j] = " ";
+                    this.board[i][j] = " ";
                 }
             }
         }
@@ -109,7 +118,7 @@ public class Othelo
             System.out.println("What piece would you like to be? (X or O)");
             String ans = s.next().toLowerCase();
             if(ans.length() == 0){
-                System.out.print('\u000C');
+                //System.out.print('\u000C');
                 continue;
             }
             else if(ans.equals("x")){
@@ -126,7 +135,7 @@ public class Othelo
                 return "quit";
             }
             else{
-                System.out.print('\u000C');
+                //System.out.print('\u000C');
                 System.out.println("Please give a valid input");
                 System.out.println("");
                 continue;
@@ -150,18 +159,18 @@ public class Othelo
         int[] mv = new int[2];
         if(turn.equals(this.oh.piece)){
             System.out.println("Getting human move");
-            mv = this.oh.oPlay(board);
+            mv = this.oh.oPlay(this.board);
         }
         if(turn.equals(this.oc.piece)){
             System.out.println("Getting computer move");
-            mv = this.oc.oPlay(board,this.oc.piece,this.oh.piece);
+            mv = this.oc.oPlay(this.board,this.oc.piece,this.oh.piece);
         }
         return mv;
     }
     
-    public String[][] updateBoard(String[][] board, String piece, int[] move){
-        int bl = board[0].length;
-        board[move[0]][move[1]] = piece;
+    public void updateBoard(String piece, int[] move){
+        int bl = this.board[0].length;
+        this.board[move[0]][move[1]] = piece;
         int r = move[0];
         int c = move[1];
         int[] end = new int[]{-1,-1};
@@ -169,62 +178,62 @@ public class Othelo
         // first the postitive direction
         if(c != bl-1){
             for(int col=c+1;col<bl;col++){
-                if(board[r][col] == " ") break;
-                if(board[r][col] == piece){
+                if(this.board[r][col] == " ") break;
+                if(this.board[r][col] == piece){
                     end = new int[]{r,col};
                     break;
                 }
             }
         }
         if(end[0] != -1){
-            System.out.println("Flipping from [" + move[0] + "," + move[1] + "] to [" + end[0] + "," + end[1] + "]");
-            board = flip(board,piece,move,end);
+            //System.out.println("Flipping from [" + move[0] + "," + move[1] + "] to [" + end[0] + "," + end[1] + "]");
+            this.flip(piece,move,end);
         }
         end = new int[]{-1,-1};
         // now the negative direction
         if(c != 0){
             for(int col=c-1;col>=0;col--){
-                if(board[r][col] == " ") break;
-                if(board[r][col] == piece){
+                if(this.board[r][col] == " ") break;
+                if(this.board[r][col] == piece){
                     end = new int[]{r,col};
                     break;
                 }
             }
         }
         if(end[0] != -1){
-            System.out.println("Flipping from [" + move[0] + "," + move[1] + "] to [" + end[0] + "," + end[1] + "]");
-            board = flip(board,piece,move,end);
+            //System.out.println("Flipping from [" + move[0] + "," + move[1] + "] to [" + end[0] + "," + end[1] + "]");
+            this.flip(piece,move,end);
         }
         end = new int[]{-1,-1};
         // check if should flip column
         // first the postive direction
         if(r != bl-1){
             for(int row=r+1;row<bl;row++){
-                if(board[row][c] == " ") break;
-                if(board[row][c] == piece){
+                if(this.board[row][c] == " ") break;
+                if(this.board[row][c] == piece){
                     end = new int[]{row,c};
                     break;
                 }
             }
         }
         if(end[0] != -1){
-            System.out.println("Flipping from [" + move[0] + "," + move[1] + "] to [" + end[0] + "," + end[1] + "]");
-            board = flip(board,piece,move,end);
+            //System.out.println("Flipping from [" + move[0] + "," + move[1] + "] to [" + end[0] + "," + end[1] + "]");
+            this.flip(piece,move,end);
         }
         end = new int[]{-1,-1};
         // now the negative direction
         if(r != 0){
             for(int row=r-1;row>=0;row--){
-                if(board[row][c] == " ") break;
-                if(board[row][c] == piece){
+                if(this.board[row][c] == " ") break;
+                if(this.board[row][c] == piece){
                     end = new int[]{row,c};
                     break;
                 }
             }
         }
         if(end[0] != -1){
-            System.out.println("Flipping from [" + move[0] + "," + move[1] + "] to [" + end[0] + "," + end[1] + "]");
-            board = flip(board,piece,move,end);
+            //System.out.println("Flipping from [" + move[0] + "," + move[1] + "] to [" + end[0] + "," + end[1] + "]");
+            this.flip(piece,move,end);
         }
         end = new int[]{-1,-1};
         // check if should flip diagonal
@@ -232,8 +241,8 @@ public class Othelo
         if(r != bl-1 && c != bl-1){
             for(int row=r+1;row<bl;row++){
                 for(int col=c+1;col<bl;col++){
-                    if(board[row][col] == " ") break;
-                    if(board[row][col] == piece){
+                    if(this.board[row][col] == " ") break;
+                    if(this.board[row][col] == piece){
                         end = new int[]{row,col};
                         break;
                     }
@@ -241,16 +250,16 @@ public class Othelo
             }
         }
         if(end[0] != -1){
-            System.out.println("Flipping from [" + move[0] + "," + move[1] + "] to [" + end[0] + "," + end[1] + "]");
-            board = flip(board,piece,move,end);
+            //System.out.println("Flipping from [" + move[0] + "," + move[1] + "] to [" + end[0] + "," + end[1] + "]");
+            this.flip(piece,move,end);
         }
         end = new int[]{-1,-1};
         // now down left
         if(r != bl-1 && c != 0){
             for(int row=r+1;row<bl;row++){
                 for(int col=c-1;col>=0;col--){
-                    if(board[row][col] == " ") break;
-                    if(board[row][col] == piece){
+                    if(this.board[row][col] == " ") break;
+                    if(this.board[row][col] == piece){
                         end = new int[]{row,col};
                         break;
                     }
@@ -258,16 +267,16 @@ public class Othelo
             }
         }
         if(end[0] != -1){
-            System.out.println("Flipping from [" + move[0] + "," + move[1] + "] to [" + end[0] + "," + end[1] + "]");
-            board = flip(board,piece,move,end);
+            //System.out.println("Flipping from [" + move[0] + "," + move[1] + "] to [" + end[0] + "," + end[1] + "]");
+            this.flip(piece,move,end);
         }
         end = new int[]{-1,-1};
         // now up right
         if(r != 0 && c != bl-1){
             for(int row=r-1;row>=0;row--){
                 for(int col=c+1;col<bl;col++){
-                    if(board[row][col] == " ") break;
-                    if(board[row][col] == piece){
+                    if(this.board[row][col] == " ") break;
+                    if(this.board[row][col] == piece){
                         end = new int[]{row,col};
                         break;
                     }
@@ -275,16 +284,16 @@ public class Othelo
             }
         }
         if(end[0] != -1){
-            System.out.println("Flipping from [" + move[0] + "," + move[1] + "] to [" + end[0] + "," + end[1] + "]");
-            board = flip(board,piece,move,end);
+            //System.out.println("Flipping from [" + move[0] + "," + move[1] + "] to [" + end[0] + "," + end[1] + "]");
+            this.flip(piece,move,end);
         }
         end = new int[]{-1,-1};
         // now up left
         if(r != 0 && c != 0){
             for(int row=r-1;row>=0;row--){
                 for(int col=c-1;col>=0;col--){
-                    if(board[row][col] == " ") break;
-                    if(board[row][col] == piece){
+                    if(this.board[row][col] == " ") break;
+                    if(this.board[row][col] == piece){
                         end = new int[]{row,col};
                         break;
                     }
@@ -292,26 +301,23 @@ public class Othelo
             }
         }
         if(end[0] != -1){
-            System.out.println("Flipping from [" + move[0] + "," + move[1] + "] to [" + end[0] + "," + end[1] + "]");
-            board = flip(board,piece,move,end);
+            //System.out.println("Flipping from [" + move[0] + "," + move[1] + "] to [" + end[0] + "," + end[1] + "]");
+            this.flip(piece,move,end);
         }
-        return board;
     }
     
-    public String[][] flip(String[][] board, String piece, int[] start, int[] end){
+    public void flip(String piece, int[] start, int[] end){
         if(start[0] == end[0]){
             for(int col=Math.min(start[1],end[1]);col<=Math.max(start[1],end[1]);col++){
-                System.out.println("flipped [" + start[0] + "," + col + "]");
-                board[start[0]][col] = piece;
+                //System.out.println("flipped [" + start[0] + "," + col + "]");
+                this.board[start[0]][col] = piece;
             }
-            return board;
         }
         if(start[1] == end[1]){
             for(int row=Math.min(start[0],end[0]);row<=Math.max(start[0],end[0]);row++){
-                System.out.println("flipped [" + row + "," + start[1] + "]");
-                board[row][start[1]] = piece;
+                //System.out.println("flipped [" + row + "," + start[1] + "]");
+                this.board[row][start[1]] = piece;
             }
-            return board;
         }
         int[] first = new int[2];
         int[] last = new int[2];
@@ -327,8 +333,8 @@ public class Othelo
             int row = first[0];
             int col = first[1];
             while(row<=last[0] && col<=last[0]){
-                System.out.println("flipped [" + start[0] + "," + col + "]");
-                board[row][col] = piece;
+                //System.out.println("flipped [" + start[0] + "," + col + "]");
+                this.board[row][col] = piece;
                 row++;
                 col++;
             }
@@ -338,14 +344,13 @@ public class Othelo
                     board[row][col] = piece;
                 }
             }*/
-            return board;
         }
         if(first[1] > last[1]){
             int row = first[0];
             int col = first[1];
             while(row<=last[0] && col>=last[1]){
-                System.out.println("flipped [" + start[0] + "," + col + "]");
-                board[row][col] = piece;
+                //System.out.println("flipped [" + start[0] + "," + col + "]");
+                this.board[row][col] = piece;
                 row++;
                 col--;
             }
@@ -355,85 +360,83 @@ public class Othelo
                     board[row][col] = piece;
                 }
             }*/
-            return board;
         }
-        return board;
     }
     
     public boolean fullBoard(){
-        for(int i=0;i<board[0].length;i++){
-            for(int j=0;j<board[0].length;j++){
-                if(board[i][j] == " ") return false;
+        for(int i=0;i<this.board[0].length;i++){
+            for(int j=0;j<this.board[0].length;j++){
+                if(this.board[i][j] == " ") return false;
             }
         }
         return true;
     }
     
     public String winner(){
-        int hScore = score(board, this.oh.piece);
-        int cScore = score(board, this.oc.piece);
+        int hScore = score(this.oh.piece);
+        int cScore = score(this.oc.piece);
         if(hScore > cScore) return "human";
         if(cScore > hScore) return "computer";
         else return "tie";
     }
     
-    public int score(String[][] board, String piece){
+    public int score(String piece){
         int count = 0;
-        for(int i=0;i<board[0].length;i++){
-            for(int j=0;j<board[0].length;j++){
-                if(board[i][j] == piece) count++; 
+        for(int i=0;i<this.board[0].length;i++){
+            for(int j=0;j<this.board[0].length;j++){
+                if(this.board[i][j] == piece) count++; 
             }
         }
         return count;
     }
     
-    public void printBoard(String[][] board){
+    public void printBoard(){
         System.out.println("");
         System.out.println("  0 1 2 3 4 5 6 7 8 9");
-        System.out.println("0 " + board[0][0] + "|" + board[0][1] + "|" + board[0][2] + "|" + board[0][3] + "|"
-                                + board[0][4] + "|" + board[0][5] + "|" + board[0][6] + "|" + board[0][7] + "|"
-                                + board[0][8] + "|" + board[0][9]);
+        System.out.println("0 " + this.board[0][0] + "|" + this.board[0][1] + "|" + this.board[0][2] + "|" + this.board[0][3] + "|"
+                                + this.board[0][4] + "|" + this.board[0][5] + "|" + this.board[0][6] + "|" + this.board[0][7] + "|"
+                                + this.board[0][8] + "|" +this.board[0][9]);
         System.out.println("  -+-+-+-+-+-+-+-+-+-");
-        System.out.println("1 " + board[1][0] + "|" + board[1][1] + "|" + board[1][2] + "|" + board[1][3] + "|"
-                                + board[1][4] + "|" + board[1][5] + "|" + board[1][6] + "|" + board[1][7] + "|"
-                                + board[1][8] + "|" + board[1][9]);
+        System.out.println("1 " +this.board[1][0] + "|" +this.board[1][1] + "|" +this.board[1][2] + "|" +this.board[1][3] + "|"
+                                +this.board[1][4] + "|" +this.board[1][5] + "|" +this.board[1][6] + "|" +this.board[1][7] + "|"
+                                +this.board[1][8] + "|" +this.board[1][9]);
         System.out.println("  -+-+-+-+-+-+-+-+-+-");
-        System.out.println("2 " + board[2][0] + "|" + board[2][1] + "|" + board[2][2] + "|" + board[2][3] + "|"
-                                + board[2][4] + "|" + board[2][5] + "|" + board[2][6] + "|" + board[2][7] + "|"
-                                + board[2][8] + "|" + board[2][9]);
+        System.out.println("2 " +this.board[2][0] + "|" +this.board[2][1] + "|" +this.board[2][2] + "|" +this.board[2][3] + "|"
+                                +this.board[2][4] + "|" +this.board[2][5] + "|" +this.board[2][6] + "|" +this.board[2][7] + "|"
+                                +this.board[2][8] + "|" +this.board[2][9]);
         System.out.println("  -+-+-+-+-+-+-+-+-+-");
-        System.out.println("3 " + board[3][0] + "|" + board[3][1] + "|" + board[3][2] + "|" + board[3][3] + "|"
-                                + board[3][4] + "|" + board[3][5] + "|" + board[3][6] + "|" + board[3][7] + "|"
-                                + board[3][8] + "|" + board[3][9]);
+        System.out.println("3 " +this.board[3][0] + "|" +this.board[3][1] + "|" +this.board[3][2] + "|" +this.board[3][3] + "|"
+                                +this.board[3][4] + "|" +this.board[3][5] + "|" +this.board[3][6] + "|" +this.board[3][7] + "|"
+                                +this.board[3][8] + "|" +this.board[3][9]);
         System.out.println("  -+-+-+-+-+-+-+-+-+-");
-        System.out.println("4 " + board[4][0] + "|" + board[4][1] + "|" + board[4][2] + "|" + board[4][3] + "|"
-                                + board[4][4] + "|" + board[4][5] + "|" + board[4][6] + "|" + board[4][7] + "|"
-                                + board[4][8] + "|" + board[4][9]);
+        System.out.println("4 " +this.board[4][0] + "|" +this.board[4][1] + "|" +this.board[4][2] + "|" +this.board[4][3] + "|"
+                                +this.board[4][4] + "|" +this.board[4][5] + "|" +this.board[4][6] + "|" +this.board[4][7] + "|"
+                                +this.board[4][8] + "|" +this.board[4][9]);
         System.out.println("  -+-+-+-+-+-+-+-+-+-");
-        System.out.println("5 " + board[5][0] + "|" + board[5][1] + "|" + board[5][2] + "|" + board[5][3] + "|"
-                                + board[5][4] + "|" + board[5][5] + "|" + board[5][6] + "|" + board[5][7] + "|"
-                                + board[5][8] + "|" + board[5][9]);
+        System.out.println("5 " +this.board[5][0] + "|" +this.board[5][1] + "|" +this.board[5][2] + "|" +this.board[5][3] + "|"
+                                +this.board[5][4] + "|" +this.board[5][5] + "|" +this.board[5][6] + "|" +this.board[5][7] + "|"
+                                +this.board[5][8] + "|" +this.board[5][9]);
         System.out.println("  -+-+-+-+-+-+-+-+-+-");
-        System.out.println("6 " + board[6][0] + "|" + board[6][1] + "|" + board[6][2] + "|" + board[6][3] + "|"
-                                + board[6][4] + "|" + board[6][5] + "|" + board[6][6] + "|" + board[6][7] + "|"
-                                + board[6][8] + "|" + board[6][9]);
+        System.out.println("6 " +this.board[6][0] + "|" +this.board[6][1] + "|" +this.board[6][2] + "|" +this.board[6][3] + "|"
+                                +this.board[6][4] + "|" +this.board[6][5] + "|" +this.board[6][6] + "|" +this.board[6][7] + "|"
+                                +this.board[6][8] + "|" +this.board[6][9]);
         System.out.println("  -+-+-+-+-+-+-+-+-+-");
-        System.out.println("7 " + board[7][0] + "|" + board[7][1] + "|" + board[7][2] + "|" + board[7][3] + "|"
-                                + board[7][4] + "|" + board[7][5] + "|" + board[7][6] + "|" + board[7][7] + "|"
-                                + board[7][8] + "|" + board[7][9]);
+        System.out.println("7 " +this.board[7][0] + "|" +this.board[7][1] + "|" +this.board[7][2] + "|" +this.board[7][3] + "|"
+                                +this.board[7][4] + "|" +this.board[7][5] + "|" +this.board[7][6] + "|" +this.board[7][7] + "|"
+                                +this.board[7][8] + "|" +this.board[7][9]);
         System.out.println("  -+-+-+-+-+-+-+-+-+-");
-        System.out.println("8 " + board[8][0] + "|" + board[8][1] + "|" + board[8][2] + "|" + board[8][3] + "|"
-                                + board[8][4] + "|" + board[8][5] + "|" + board[8][6] + "|" + board[8][7] + "|"
-                                + board[8][8] + "|" + board[8][9]);
+        System.out.println("8 " +this.board[8][0] + "|" +this.board[8][1] + "|" +this.board[8][2] + "|" +this.board[8][3] + "|"
+                                +this.board[8][4] + "|" +this.board[8][5] + "|" +this.board[8][6] + "|" +this.board[8][7] + "|"
+                                +this.board[8][8] + "|" +this.board[8][9]);
         System.out.println("  -+-+-+-+-+-+-+-+-+-");
-        System.out.println("9 " + board[9][0] + "|" + board[9][1] + "|" + board[9][2] + "|" + board[9][3] + "|"
-                                + board[9][4] + "|" + board[9][5] + "|" + board[9][6] + "|" + board[9][7] + "|"
-                                + board[9][8] + "|" + board[9][9]);
+        System.out.println("9 " +this.board[9][0] + "|" +this.board[9][1] + "|" +this.board[9][2] + "|" +this.board[9][3] + "|"
+                                +this.board[9][4] + "|" +this.board[9][5] + "|" +this.board[9][6] + "|" +this.board[9][7] + "|"
+                                +this.board[9][8] + "|" +this.board[9][9]);
         System.out.println("");
     }
     
     public boolean validMove(int[] move){
-        if(board[move[0]][move[1]] != " ") return false;
+        if(this.board[move[0]][move[1]] != " ") return false;
         return true;
     }
 }
