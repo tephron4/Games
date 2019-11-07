@@ -128,13 +128,117 @@ public class Othelo
     }
     
     public String[][] updateBoard(String[][] board, String piece, int[] move){
+        int bl = board[0].length;
         board[move[0]][move[1]] = piece;
         int r = move[0];
         int c = move[1];
         int[] end = new int[]{-1,-1};
         // check if should flip row
         // first the postitive direction
-        
+        if(c != bl-1){
+            for(int col=c+1;col<bl;col++){
+                if(board[r][col] == " ") break;
+                if(board[r][col] == piece){
+                    end = new int[]{r,col};
+                    break;
+                }
+            }
+        }
+        if(end[0] != -1) board = flip(board,piece,move,end);
+        end = new int[]{-1,-1};
+        // now the negative direction
+        if(c != 0){
+            for(int col=c-1;col>=0;col--){
+                if(board[r][col] == " ") break;
+                if(board[r][col] == piece){
+                    end = new int[]{r,col};
+                    break;
+                }
+            }
+        }
+        if(end[0] != -1) board = flip(board,piece,move,end);
+        end = new int[]{-1,-1};
+        // check if should flip column
+        // first the postive direction
+        if(r != bl-1){
+            for(int row=r+1;row<bl;row++){
+                if(board[row][c] == " ") break;
+                if(board[row][c] == piece){
+                    end = new int[]{row,c};
+                    break;
+                }
+            }
+        }
+        if(end[0] != -1) board = flip(board,piece,move,end);
+        end = new int[]{-1,-1};
+        // now the negative direction
+        if(r != 0){
+            for(int row=r-1;row>=0;row--){
+                if(board[row][c] == " ") break;
+                if(board[row][c] == piece){
+                    end = new int[]{row,c};
+                    break;
+                }
+            }
+        }
+        if(end[0] != -1) board = flip(board,piece,move,end);
+        end = new int[]{-1,-1};
+        // check if should flip diagonal
+        // first down right
+        if(r != bl-1 && c != bl-1){
+            for(int row=r+1;row<bl;row++){
+                for(int col=c+1;col<bl;col++){
+                    if(board[row][col] == " ") break;
+                    if(board[row][col] == piece){
+                        end = new int[]{row,col};
+                        break;
+                    }
+                }
+            }
+        }
+        if(end[0] != -1) board = flip(board,piece,move,end);
+        end = new int[]{-1,-1};
+        // now down left
+        if(r != bl-1 && c != 0){
+            for(int row=r+1;row<bl;row++){
+                for(int col=c-1;col>=0;col--){
+                    if(board[row][col] == " ") break;
+                    if(board[row][col] == piece){
+                        end = new int[]{row,col};
+                        break;
+                    }
+                }
+            }
+        }
+        if(end[0] != -1) board = flip(board,piece,move,end);
+        end = new int[]{-1,-1};
+        // now up right
+        if(r != 0 && c != bl-1){
+            for(int row=r-1;row>=0;row--){
+                for(int col=c+1;col<bl;col++){
+                    if(board[row][col] == " ") break;
+                    if(board[row][col] == piece){
+                        end = new int[]{row,col};
+                        break;
+                    }
+                }
+            }
+        }
+        if(end[0] != -1) board = flip(board,piece,move,end);
+        end = new int[]{-1,-1};
+        // now up left
+        if(r != 0 && c != 0){
+            for(int row=r-1;row>=0;row--){
+                for(int col=c-1;col>=0;col--){
+                    if(board[row][col] == " ") break;
+                    if(board[row][col] == piece){
+                        end = new int[]{row,col};
+                        break;
+                    }
+                }
+            }
+        }
+        if(end[0] != -1) board = flip(board,piece,move,end);
         return board;
     }
     
