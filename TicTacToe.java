@@ -34,6 +34,7 @@ public class TicTacToe
             //System.out.println("Like a number pad or calculator");
             //System.out.println("");
             boolean playing = true;
+            this.th.played("o");
             while(playing){
                 switchTurn();
                 boolean moving = true;

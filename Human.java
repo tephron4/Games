@@ -152,6 +152,10 @@ public class Human
         if(game.equals("t")) this.tTies++;
         if(game.equals("o")) this.oTies++;
     }
+    public void played(String game){
+        if(game.equals("t")) this.tGamesPlayed++;
+        if(game.equals("o")) this.oGamesPlayed++;
+    }
     
     public String getUsername(){
         return this.username;

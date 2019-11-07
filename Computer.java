@@ -23,13 +23,32 @@ public class Computer
     }
     
     public boolean validMove(String[][] board, int x, int y){
-        if(!board[x][y].equals(" ")) return false;
-        return true;
+        if(board[x][y].equals(" ")) return true;
+        return false;
     }
     
     public int[] oPlay(String[][] board, String cPiece, String hPiece){
         int[] move = new int[2];
-        
+        int highScore = 0;
+        int bestRow = -1;
+        int bestCol = -1;
+        String[][] boardCopy;
+        Othelo o = new Othelo(new Human(), new Computer(cPiece));
+        for(int row=0;row<board[0].length;row++){
+            boardCopy = board;
+            for(int col=0;col<board[0].length;col++){
+                if(validMove(board, row, col)){
+                    boardCopy = o.updateBoard(boardCopy, piece, new int[]{row,col});
+                    int score = o.score(board,cPiece);
+                    if(score > highScore){
+                        highScore = score;
+                        bestRow = row;
+                        bestCol = col;
+                    }
+                }
+            }
+        }
+        move = new int[]{bestRow,bestCol};
         return move;
     }
     
