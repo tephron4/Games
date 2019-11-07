@@ -30,29 +30,30 @@ public class Computer
     
     public int[] oPlay(String[][] board, String cPiece, String hPiece){
         int[] move = new int[2];
-        int highScore = 0;
         int bestRow = -1;
         int bestCol = -1;
-        String[][] boardCopy = board;
-        Othelo o = new Othelo(new Human(), new Computer(cPiece), boardCopy);
-        for(int row=0;row<board[0].length;row++){
-            for(int col=0;col<board[0].length;col++){
-                o.setBoard(boardCopy);
-                if(validMove(board, row, col)){
-                    o.updateBoard(piece, new int[]{row,col});
-                    int score = o.score(cPiece);
-                    System.out.println("possible score: " + score + "; current best score: " + highScore);
-                    if(score > highScore){
-                        highScore = score;
-                        bestRow = row;
-                        bestCol = col;
+        int bestScore = 0;
+        String[][] bCopy = new String[10][10];
+        for(int i=0;i<board[0].length;i++){
+            for(int j=0;j<board[0].length;j++){
+                for(int row=0;row<board[0].length;row++){
+                    for(int col=0;col<board[0].length;col++){
+                        bCopy[row][col] = board[row][col];
+                    }
+                }   
+                Othelo o = new Othelo(new Human(), new Computer(cPiece), bCopy);
+                if(validMove(o.board,i,j)){
+                    o.updateBoard(cPiece,new int[]{i,j});
+                    int newScore = o.score(cPiece);
+                    if(newScore > bestScore){
+                        bestRow = i;
+                        bestCol = j;
+                        bestScore = newScore;
                     }
                 }
-            }
+            }   
         }
         System.out.println("Computer is moving to [" + bestRow + "," + bestCol + "]");
-        Scanner s = new Scanner(System.in);
-        String a = s.next();
         move = new int[]{bestRow,bestCol};
         return move;
     }
