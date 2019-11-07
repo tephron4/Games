@@ -9,7 +9,7 @@ public class Othelo
 {
     Scanner s = new Scanner(System.in);
     
-    private String[][] board = new String[10][10];
+    String[][] board = new String[10][10];
     Human oh;
     Computer oc;
     String turn = "";
@@ -18,14 +18,6 @@ public class Othelo
         this.oh = oh;
         this.oc = oc;
         this.board = board;
-    }
-    
-    public String[][] getBoard(){
-        return this.board;
-    }
-    
-    public void setBoard(String[][] b){
-        this.board = b;
     }
     
     public void play(){
@@ -239,14 +231,21 @@ public class Othelo
         // check if should flip diagonal
         // first down right
         if(r != bl-1 && c != bl-1){
-            for(int row=r+1;row<bl;row++){
+            boolean keepGoing = true;
+            int row = r+1;
+            while(keepGoing && row<bl){
                 for(int col=c+1;col<bl;col++){
-                    if(this.board[row][col] == " ") break;
+                    if(this.board[row][col] == " "){
+                        keepGoing = false;
+                        break;
+                    }
                     if(this.board[row][col] == piece){
+                        keepGoing = false;
                         end = new int[]{row,col};
                         break;
                     }
                 }
+                row++;
             }
         }
         if(end[0] != -1){
@@ -256,14 +255,21 @@ public class Othelo
         end = new int[]{-1,-1};
         // now down left
         if(r != bl-1 && c != 0){
-            for(int row=r+1;row<bl;row++){
+            boolean keepGoing = true;
+            int row = r+1;
+            while(keepGoing && row<bl){
                 for(int col=c-1;col>=0;col--){
-                    if(this.board[row][col] == " ") break;
+                    if(this.board[row][col] == " "){
+                        keepGoing = false;
+                        break;
+                    }
                     if(this.board[row][col] == piece){
+                        keepGoing = false;
                         end = new int[]{row,col};
                         break;
                     }
                 }
+                row++;
             }
         }
         if(end[0] != -1){
@@ -273,14 +279,21 @@ public class Othelo
         end = new int[]{-1,-1};
         // now up right
         if(r != 0 && c != bl-1){
-            for(int row=r-1;row>=0;row--){
+            boolean keepGoing = true;
+            int row = r-1;
+            while(keepGoing && row>=0){
                 for(int col=c+1;col<bl;col++){
-                    if(this.board[row][col] == " ") break;
+                    if(this.board[row][col] == " "){
+                        keepGoing = false;
+                        break;
+                    }
                     if(this.board[row][col] == piece){
+                        keepGoing = false;
                         end = new int[]{row,col};
                         break;
                     }
                 }
+                row--;
             }
         }
         if(end[0] != -1){
@@ -290,14 +303,21 @@ public class Othelo
         end = new int[]{-1,-1};
         // now up left
         if(r != 0 && c != 0){
-            for(int row=r-1;row>=0;row--){
+            boolean keepGoing = true;
+            int row = r-1;
+            while(keepGoing && r>=0){
                 for(int col=c-1;col>=0;col--){
-                    if(this.board[row][col] == " ") break;
+                    if(this.board[row][col] == " "){
+                        keepGoing = false;
+                        break;
+                    }
                     if(this.board[row][col] == piece){
+                        keepGoing = false;
                         end = new int[]{row,col};
                         break;
                     }
                 }
+                row--;
             }
         }
         if(end[0] != -1){
