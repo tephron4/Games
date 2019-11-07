@@ -30,9 +30,9 @@ public class Othelo
             this.oh.played("o");
             while(inGame){
                 this.switchTurn();
-                if(turn.equals(this.oh.piece)){
+                //if(turn.equals(this.oh.piece)){
                     this.printBoard();
-                }   
+                //}   
                 boolean moving = true;
                 int[] move = new int[2];
                 while(moving){
@@ -178,7 +178,7 @@ public class Othelo
             }
         }
         if(end[0] != -1){
-            //System.out.println("Flipping from [" + move[0] + "," + move[1] + "] to [" + end[0] + "," + end[1] + "]");
+            System.out.println("Flipping from [" + move[0] + "," + move[1] + "] to [" + end[0] + "," + end[1] + "]");
             this.flip(piece,move,end);
         }
         end = new int[]{-1,-1};
@@ -193,7 +193,7 @@ public class Othelo
             }
         }
         if(end[0] != -1){
-            //System.out.println("Flipping from [" + move[0] + "," + move[1] + "] to [" + end[0] + "," + end[1] + "]");
+            System.out.println("Flipping from [" + move[0] + "," + move[1] + "] to [" + end[0] + "," + end[1] + "]");
             this.flip(piece,move,end);
         }
         end = new int[]{-1,-1};
@@ -209,7 +209,7 @@ public class Othelo
             }
         }
         if(end[0] != -1){
-            //System.out.println("Flipping from [" + move[0] + "," + move[1] + "] to [" + end[0] + "," + end[1] + "]");
+            System.out.println("Flipping from [" + move[0] + "," + move[1] + "] to [" + end[0] + "," + end[1] + "]");
             this.flip(piece,move,end);
         }
         end = new int[]{-1,-1};
@@ -224,7 +224,7 @@ public class Othelo
             }
         }
         if(end[0] != -1){
-            //System.out.println("Flipping from [" + move[0] + "," + move[1] + "] to [" + end[0] + "," + end[1] + "]");
+            System.out.println("Flipping from [" + move[0] + "," + move[1] + "] to [" + end[0] + "," + end[1] + "]");
             this.flip(piece,move,end);
         }
         end = new int[]{-1,-1};
@@ -249,7 +249,7 @@ public class Othelo
             }
         }
         if(end[0] != -1){
-            //System.out.println("Flipping from [" + move[0] + "," + move[1] + "] to [" + end[0] + "," + end[1] + "]");
+            System.out.println("Flipping from [" + move[0] + "," + move[1] + "] to [" + end[0] + "," + end[1] + "]");
             this.flip(piece,move,end);
         }
         end = new int[]{-1,-1};
@@ -273,7 +273,7 @@ public class Othelo
             }
         }
         if(end[0] != -1){
-            //System.out.println("Flipping from [" + move[0] + "," + move[1] + "] to [" + end[0] + "," + end[1] + "]");
+            System.out.println("Flipping from [" + move[0] + "," + move[1] + "] to [" + end[0] + "," + end[1] + "]");
             this.flip(piece,move,end);
         }
         end = new int[]{-1,-1};
@@ -297,7 +297,7 @@ public class Othelo
             }
         }
         if(end[0] != -1){
-            //System.out.println("Flipping from [" + move[0] + "," + move[1] + "] to [" + end[0] + "," + end[1] + "]");
+            System.out.println("Flipping from [" + move[0] + "," + move[1] + "] to [" + end[0] + "," + end[1] + "]");
             this.flip(piece,move,end);
         }
         end = new int[]{-1,-1};
@@ -321,7 +321,7 @@ public class Othelo
             }
         }
         if(end[0] != -1){
-            //System.out.println("Flipping from [" + move[0] + "," + move[1] + "] to [" + end[0] + "," + end[1] + "]");
+            System.out.println("Flipping from [" + move[0] + "," + move[1] + "] to [" + end[0] + "," + end[1] + "]");
             this.flip(piece,move,end);
         }
     }
@@ -329,13 +329,13 @@ public class Othelo
     public void flip(String piece, int[] start, int[] end){
         if(start[0] == end[0]){
             for(int col=Math.min(start[1],end[1]);col<=Math.max(start[1],end[1]);col++){
-                //System.out.println("flipped [" + start[0] + "," + col + "]");
+                System.out.println("flipped [" + start[0] + "," + col + "]");
                 this.board[start[0]][col] = piece;
             }
         }
         if(start[1] == end[1]){
             for(int row=Math.min(start[0],end[0]);row<=Math.max(start[0],end[0]);row++){
-                //System.out.println("flipped [" + row + "," + start[1] + "]");
+                System.out.println("flipped [" + row + "," + start[1] + "]");
                 this.board[row][start[1]] = piece;
             }
         }
@@ -353,7 +353,7 @@ public class Othelo
             int row = first[0];
             int col = first[1];
             while(row<=last[0] && col<=last[0]){
-                //System.out.println("flipped [" + start[0] + "," + col + "]");
+                System.out.println("flipped [" + start[0] + "," + col + "]");
                 this.board[row][col] = piece;
                 row++;
                 col++;
@@ -369,7 +369,7 @@ public class Othelo
             int row = first[0];
             int col = first[1];
             while(row<=last[0] && col>=last[1]){
-                //System.out.println("flipped [" + start[0] + "," + col + "]");
+                System.out.println("flipped [" + row + "," + col + "]");
                 this.board[row][col] = piece;
                 row++;
                 col--;
