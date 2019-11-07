@@ -44,9 +44,7 @@ public class Othelo
                             continue;
                         }
                     }   
-                    else{
-                        moving = false;
-                    }   
+                    moving = false;
                 }   
                 board = updateBoard(board, turn, move);
                 if(fullBoard()){
@@ -114,17 +112,17 @@ public class Othelo
                 System.out.print('\u000C');
                 continue;
             }
-            if(ans.equals("x")){
+            else if(ans.equals("x")){
                 this.oh.piece = "X";
                 this.oc.piece = "O";
                 choosing = false;
             }
-            if(ans.equals("o")){
+            else if(ans.equals("o")){
                 this.oh.piece = "O";
                 this.oc.piece = "X";
                 choosing = false;
             }
-            if(ans.equals("quit")){
+            else if(ans.equals("quit")){
                 return "quit";
             }
             else{
@@ -143,16 +141,19 @@ public class Othelo
             if(x == 0) turn = "X";
             if(x == 1) turn = "O";
         }
-        if(turn.equals("X")) turn = "O";
-        if(turn.equals("O")) turn = "X";
+        else if(turn.equals("X")) turn = "O";
+        else if(turn.equals("O")) turn = "X";
+        System.out.println("Switched turn to: " + turn);
     }
     
     public int[] getMove(){
         int[] mv = new int[2];
         if(turn.equals(this.oh.piece)){
+            System.out.println("Getting human move");
             mv = this.oh.oPlay(board);
         }
         if(turn.equals(this.oc.piece)){
+            System.out.println("Getting computer move");
             mv = this.oc.oPlay(board,this.oc.piece,this.oh.piece);
         }
         return mv;
@@ -175,7 +176,10 @@ public class Othelo
                 }
             }
         }
-        if(end[0] != -1) board = flip(board,piece,move,end);
+        if(end[0] != -1){
+            System.out.println("Flipping from [" + move[0] + "," + move[1] + "] to [" + end[0] + "," + end[1] + "]");
+            board = flip(board,piece,move,end);
+        }
         end = new int[]{-1,-1};
         // now the negative direction
         if(c != 0){
@@ -187,7 +191,10 @@ public class Othelo
                 }
             }
         }
-        if(end[0] != -1) board = flip(board,piece,move,end);
+        if(end[0] != -1){
+            System.out.println("Flipping from [" + move[0] + "," + move[1] + "] to [" + end[0] + "," + end[1] + "]");
+            board = flip(board,piece,move,end);
+        }
         end = new int[]{-1,-1};
         // check if should flip column
         // first the postive direction
@@ -200,7 +207,10 @@ public class Othelo
                 }
             }
         }
-        if(end[0] != -1) board = flip(board,piece,move,end);
+        if(end[0] != -1){
+            System.out.println("Flipping from [" + move[0] + "," + move[1] + "] to [" + end[0] + "," + end[1] + "]");
+            board = flip(board,piece,move,end);
+        }
         end = new int[]{-1,-1};
         // now the negative direction
         if(r != 0){
@@ -212,7 +222,10 @@ public class Othelo
                 }
             }
         }
-        if(end[0] != -1) board = flip(board,piece,move,end);
+        if(end[0] != -1){
+            System.out.println("Flipping from [" + move[0] + "," + move[1] + "] to [" + end[0] + "," + end[1] + "]");
+            board = flip(board,piece,move,end);
+        }
         end = new int[]{-1,-1};
         // check if should flip diagonal
         // first down right
@@ -227,7 +240,10 @@ public class Othelo
                 }
             }
         }
-        if(end[0] != -1) board = flip(board,piece,move,end);
+        if(end[0] != -1){
+            System.out.println("Flipping from [" + move[0] + "," + move[1] + "] to [" + end[0] + "," + end[1] + "]");
+            board = flip(board,piece,move,end);
+        }
         end = new int[]{-1,-1};
         // now down left
         if(r != bl-1 && c != 0){
@@ -241,7 +257,10 @@ public class Othelo
                 }
             }
         }
-        if(end[0] != -1) board = flip(board,piece,move,end);
+        if(end[0] != -1){
+            System.out.println("Flipping from [" + move[0] + "," + move[1] + "] to [" + end[0] + "," + end[1] + "]");
+            board = flip(board,piece,move,end);
+        }
         end = new int[]{-1,-1};
         // now up right
         if(r != 0 && c != bl-1){
@@ -255,7 +274,10 @@ public class Othelo
                 }
             }
         }
-        if(end[0] != -1) board = flip(board,piece,move,end);
+        if(end[0] != -1){
+            System.out.println("Flipping from [" + move[0] + "," + move[1] + "] to [" + end[0] + "," + end[1] + "]");
+            board = flip(board,piece,move,end);
+        }
         end = new int[]{-1,-1};
         // now up left
         if(r != 0 && c != 0){
@@ -269,14 +291,25 @@ public class Othelo
                 }
             }
         }
-        if(end[0] != -1) board = flip(board,piece,move,end);
+        if(end[0] != -1){
+            System.out.println("Flipping from [" + move[0] + "," + move[1] + "] to [" + end[0] + "," + end[1] + "]");
+            board = flip(board,piece,move,end);
+        }
         return board;
     }
     
     public String[][] flip(String[][] board, String piece, int[] start, int[] end){
         if(start[0] == end[0]){
             for(int col=Math.min(start[1],end[1]);col<=Math.max(start[1],end[1]);col++){
+                System.out.println("flipped [" + start[0] + "," + col + "]");
                 board[start[0]][col] = piece;
+            }
+            return board;
+        }
+        if(start[1] == end[1]){
+            for(int row=Math.min(start[0],end[0]);row<=Math.max(start[0],end[0]);row++){
+                System.out.println("flipped [" + row + "," + start[1] + "]");
+                board[row][start[1]] = piece;
             }
             return board;
         }
@@ -286,24 +319,42 @@ public class Othelo
             first = start;
             last = end;
         }
-        if(start[0] > end[0]){
+        else if(start[0] > end[0]){
             first = end;
             last = start;
         }
         if(first[1] < last[1]){
-            for(int row=first[0];row<=last[0];row++){
+            int row = first[0];
+            int col = first[1];
+            while(row<=last[0] && col<=last[0]){
+                System.out.println("flipped [" + start[0] + "," + col + "]");
+                board[row][col] = piece;
+                row++;
+                col++;
+            }
+            /*for(int row=first[0];row<=last[0];row++){
                 for(int col=first[1];col<=last[1];col++){
+                    System.out.println("flipped [" + start[0] + "," + col + "]");
                     board[row][col] = piece;
                 }
-            }
+            }*/
             return board;
         }
         if(first[1] > last[1]){
-            for(int row=first[0];row<=last[0];row++){
+            int row = first[0];
+            int col = first[1];
+            while(row<=last[0] && col>=last[1]){
+                System.out.println("flipped [" + start[0] + "," + col + "]");
+                board[row][col] = piece;
+                row++;
+                col--;
+            }
+            /*for(int row=first[0];row<=last[0];row++){
                 for(int col=first[1];col>=last[1];col--){
+                    System.out.println("flipped [" + start[0] + "," + col + "]");
                     board[row][col] = piece;
                 }
-            }
+            }*/
             return board;
         }
         return board;
@@ -342,39 +393,39 @@ public class Othelo
         System.out.println("0 " + board[0][0] + "|" + board[0][1] + "|" + board[0][2] + "|" + board[0][3] + "|"
                                 + board[0][4] + "|" + board[0][5] + "|" + board[0][6] + "|" + board[0][7] + "|"
                                 + board[0][8] + "|" + board[0][9]);
-        System.out.println("  -+-+-+-+-+-+-+-+-");
+        System.out.println("  -+-+-+-+-+-+-+-+-+-");
         System.out.println("1 " + board[1][0] + "|" + board[1][1] + "|" + board[1][2] + "|" + board[1][3] + "|"
                                 + board[1][4] + "|" + board[1][5] + "|" + board[1][6] + "|" + board[1][7] + "|"
                                 + board[1][8] + "|" + board[1][9]);
-        System.out.println("  -+-+-+-+-+-+-+-+-");
+        System.out.println("  -+-+-+-+-+-+-+-+-+-");
         System.out.println("2 " + board[2][0] + "|" + board[2][1] + "|" + board[2][2] + "|" + board[2][3] + "|"
                                 + board[2][4] + "|" + board[2][5] + "|" + board[2][6] + "|" + board[2][7] + "|"
                                 + board[2][8] + "|" + board[2][9]);
-        System.out.println("  -+-+-+-+-+-+-+-+-");
+        System.out.println("  -+-+-+-+-+-+-+-+-+-");
         System.out.println("3 " + board[3][0] + "|" + board[3][1] + "|" + board[3][2] + "|" + board[3][3] + "|"
                                 + board[3][4] + "|" + board[3][5] + "|" + board[3][6] + "|" + board[3][7] + "|"
                                 + board[3][8] + "|" + board[3][9]);
-        System.out.println("  -+-+-+-+-+-+-+-+-");
+        System.out.println("  -+-+-+-+-+-+-+-+-+-");
         System.out.println("4 " + board[4][0] + "|" + board[4][1] + "|" + board[4][2] + "|" + board[4][3] + "|"
                                 + board[4][4] + "|" + board[4][5] + "|" + board[4][6] + "|" + board[4][7] + "|"
                                 + board[4][8] + "|" + board[4][9]);
-        System.out.println("  -+-+-+-+-+-+-+-+-");
+        System.out.println("  -+-+-+-+-+-+-+-+-+-");
         System.out.println("5 " + board[5][0] + "|" + board[5][1] + "|" + board[5][2] + "|" + board[5][3] + "|"
                                 + board[5][4] + "|" + board[5][5] + "|" + board[5][6] + "|" + board[5][7] + "|"
                                 + board[5][8] + "|" + board[5][9]);
-        System.out.println("  -+-+-+-+-+-+-+-+-");
+        System.out.println("  -+-+-+-+-+-+-+-+-+-");
         System.out.println("6 " + board[6][0] + "|" + board[6][1] + "|" + board[6][2] + "|" + board[6][3] + "|"
                                 + board[6][4] + "|" + board[6][5] + "|" + board[6][6] + "|" + board[6][7] + "|"
                                 + board[6][8] + "|" + board[6][9]);
-        System.out.println("  -+-+-+-+-+-+-+-+-");
+        System.out.println("  -+-+-+-+-+-+-+-+-+-");
         System.out.println("7 " + board[7][0] + "|" + board[7][1] + "|" + board[7][2] + "|" + board[7][3] + "|"
                                 + board[7][4] + "|" + board[7][5] + "|" + board[7][6] + "|" + board[7][7] + "|"
                                 + board[7][8] + "|" + board[7][9]);
-        System.out.println("  -+-+-+-+-+-+-+-+-");
+        System.out.println("  -+-+-+-+-+-+-+-+-+-");
         System.out.println("8 " + board[8][0] + "|" + board[8][1] + "|" + board[8][2] + "|" + board[8][3] + "|"
                                 + board[8][4] + "|" + board[8][5] + "|" + board[8][6] + "|" + board[8][7] + "|"
                                 + board[8][8] + "|" + board[8][9]);
-        System.out.println("  -+-+-+-+-+-+-+-+-");
+        System.out.println("  -+-+-+-+-+-+-+-+-+-");
         System.out.println("9 " + board[9][0] + "|" + board[9][1] + "|" + board[9][2] + "|" + board[9][3] + "|"
                                 + board[9][4] + "|" + board[9][5] + "|" + board[9][6] + "|" + board[9][7] + "|"
                                 + board[9][8] + "|" + board[9][9]);
