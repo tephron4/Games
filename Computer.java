@@ -27,6 +27,12 @@ public class Computer
         return true;
     }
     
+    public int[] oPlay(String[][] board, String cPiece, String hPiece){
+        int[] move = new int[2];
+        
+        return move;
+    }
+    
     /** 
      * Gets the computer's game move
      * 
@@ -38,31 +44,31 @@ public class Computer
     public int tMove(String[] board, String cPiece, String hPiece){
         int mv = -1;
         //System.out.println("Checking if computer can win");
-        int cWin = canWin(board,cPiece);
+        int cWin = tCanWin(board,cPiece);
         if(cWin < board.length && cWin >= 0){
             mv = cWin;
             return mv;
         }
         //System.out.println("Checking if human can win");
-        int hWin = canWin(board,hPiece);
+        int hWin = tCanWin(board,hPiece);
         if(hWin < board.length && hWin >= 0){
             mv = hWin;
             return mv;
         }
         //System.out.println("Checking if middle is open");
-        int openMiddle = openMiddle(board);
+        int openMiddle = tOpenMiddle(board);
         if(openMiddle < board.length && openMiddle >= 0){
             mv = openMiddle;
             return mv;
         }
         //System.out.println("Checking if a corner is open");
-        int openCorner = openCorner(board);
+        int openCorner = tOpenCorner(board);
         if(openCorner < board.length && openCorner >= 0){
             mv = openCorner;
             return mv;
         }
         //System.out.println("Getting random move");
-        mv = randomMove(board);
+        mv = tRandomMove(board);
         return mv;
     }
     
@@ -72,7 +78,7 @@ public class Computer
      * @param board the game board
      * @return a length 2 array with coordinates for a move
      */
-    public int randomMove(String[] board){
+    public int tRandomMove(String[] board){
         int move = -1;
         boolean tf = true;
         while(tf){
@@ -95,7 +101,7 @@ public class Computer
      * @param piece the player's piece that you want to check for
      * @return an array containing the coordinates of where the player can move to win.
      */
-    public int canWin(String[] board, String piece){
+    public int tCanWin(String[] board, String piece){
         int count;
         int mv = -1;
         //check the columns
@@ -166,7 +172,7 @@ public class Computer
      * @param board the game board
      * @return an array containing the coordinates of the middle if the middle is open.
      */
-    public int openMiddle(String[] board){
+    public int tOpenMiddle(String[] board){
         if(validMove(board,4)){
             System.out.println("Middle is open");
             return 4;
@@ -180,7 +186,7 @@ public class Computer
      * @param board the game board
      * @return an array containing the coordinates of a corner if a corner is open
      */
-    public int openCorner(String[] board){
+    public int tOpenCorner(String[] board){
         if(validMove(board,0)){
             System.out.println("top left corner is open");
             return 0;
