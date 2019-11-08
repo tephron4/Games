@@ -150,11 +150,11 @@ public class Othelo
     public int[] getMove(){
         int[] mv = new int[2];
         if(turn.equals(this.oh.piece)){
-            System.out.println("Getting human move");
+            //System.out.println("Getting human move");
             mv = this.oh.oPlay(this.board);
         }
         if(turn.equals(this.oc.piece)){
-            System.out.println("Getting computer move");
+            //System.out.println("Getting computer move");
             mv = this.oc.oPlay(this.board,this.oc.piece,this.oh.piece);
         }
         return mv;
@@ -178,7 +178,7 @@ public class Othelo
             }
         }
         if(end[0] != -1){
-            System.out.println("Flipping from [" + move[0] + "," + move[1] + "] to [" + end[0] + "," + end[1] + "]");
+            //System.out.println("Flipping from [" + move[0] + "," + move[1] + "] to [" + end[0] + "," + end[1] + "]");
             this.flip(piece,move,end);
         }
         end = new int[]{-1,-1};
@@ -193,7 +193,7 @@ public class Othelo
             }
         }
         if(end[0] != -1){
-            System.out.println("Flipping from [" + move[0] + "," + move[1] + "] to [" + end[0] + "," + end[1] + "]");
+            //System.out.println("Flipping from [" + move[0] + "," + move[1] + "] to [" + end[0] + "," + end[1] + "]");
             this.flip(piece,move,end);
         }
         end = new int[]{-1,-1};
@@ -209,7 +209,7 @@ public class Othelo
             }
         }
         if(end[0] != -1){
-            System.out.println("Flipping from [" + move[0] + "," + move[1] + "] to [" + end[0] + "," + end[1] + "]");
+            //System.out.println("Flipping from [" + move[0] + "," + move[1] + "] to [" + end[0] + "," + end[1] + "]");
             this.flip(piece,move,end);
         }
         end = new int[]{-1,-1};
@@ -224,7 +224,7 @@ public class Othelo
             }
         }
         if(end[0] != -1){
-            System.out.println("Flipping from [" + move[0] + "," + move[1] + "] to [" + end[0] + "," + end[1] + "]");
+            //System.out.println("Flipping from [" + move[0] + "," + move[1] + "] to [" + end[0] + "," + end[1] + "]");
             this.flip(piece,move,end);
         }
         end = new int[]{-1,-1};
@@ -249,7 +249,7 @@ public class Othelo
             }
         }
         if(end[0] != -1){
-            System.out.println("Flipping from [" + move[0] + "," + move[1] + "] to [" + end[0] + "," + end[1] + "]");
+            //System.out.println("Flipping from [" + move[0] + "," + move[1] + "] to [" + end[0] + "," + end[1] + "]");
             this.flip(piece,move,end);
         }
         end = new int[]{-1,-1};
@@ -273,7 +273,7 @@ public class Othelo
             }
         }
         if(end[0] != -1){
-            System.out.println("Flipping from [" + move[0] + "," + move[1] + "] to [" + end[0] + "," + end[1] + "]");
+            //System.out.println("Flipping from [" + move[0] + "," + move[1] + "] to [" + end[0] + "," + end[1] + "]");
             this.flip(piece,move,end);
         }
         end = new int[]{-1,-1};
@@ -297,7 +297,7 @@ public class Othelo
             }
         }
         if(end[0] != -1){
-            System.out.println("Flipping from [" + move[0] + "," + move[1] + "] to [" + end[0] + "," + end[1] + "]");
+            //System.out.println("Flipping from [" + move[0] + "," + move[1] + "] to [" + end[0] + "," + end[1] + "]");
             this.flip(piece,move,end);
         }
         end = new int[]{-1,-1};
@@ -321,7 +321,7 @@ public class Othelo
             }
         }
         if(end[0] != -1){
-            System.out.println("Flipping from [" + move[0] + "," + move[1] + "] to [" + end[0] + "," + end[1] + "]");
+            //System.out.println("Flipping from [" + move[0] + "," + move[1] + "] to [" + end[0] + "," + end[1] + "]");
             this.flip(piece,move,end);
         }
     }
