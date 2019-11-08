@@ -53,7 +53,7 @@ public class Computer
                 }
             }   
         }
-        System.out.println("Computer is moving to [" + bestRow + "," + bestCol + "]");
+        //System.out.println("Computer is moving to [" + bestRow + "," + bestCol + "]");
         move = new int[]{bestRow,bestCol};
         return move;
     }

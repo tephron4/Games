@@ -30,9 +30,9 @@ public class Othelo
             this.oh.played("o");
             while(inGame){
                 this.switchTurn();
-                //if(turn.equals(this.oh.piece)){
+                if(turn.equals(this.oh.piece)){
                     this.printBoard();
-                //}   
+                }   
                 boolean moving = true;
                 int[] move = new int[2];
                 while(moving){
