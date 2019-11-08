@@ -98,6 +98,9 @@ public class Human
                 System.out.println("Not a valid move");
                 continue;
             }
+            if(validMove(board,mv)){
+                gettingMove = false;
+            }
         }
         return mv;
     }

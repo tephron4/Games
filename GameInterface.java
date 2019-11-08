@@ -47,7 +47,7 @@ public class GameInterface
             }
             else if(game.equals(oth)){
                 System.out.print('\u000C');
-                Othelo o = new Othelo(h,c);
+                Othelo o = new Othelo(h,c, new String[10][10]);
                 o.play();
             }
             else if(game.equals(ms)){
@@ -71,7 +71,7 @@ public class GameInterface
                 play = false;
             }
         }
-        System.out.print('\u000C');
+        //System.out.print('\u000C');
         System.out.println("Have a good day " + h.getUsername() + "!");
     }
     
