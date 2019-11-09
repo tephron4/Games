@@ -52,7 +52,7 @@ public class GameInterface
             }
             else if(game.equals(ms)){
                 System.out.print('\u000C');
-                MineSweeper m = new MineSweeper(h,c);
+                MineSweeper m = new MineSweeper(h);
                 m.play();
             }
             else if(game.equals(bs)){
