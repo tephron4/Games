@@ -39,8 +39,9 @@ public class MineSweeper
         // prints out the fieldForPlay;
     }
     
-    public void bomb(int[] place){
+    public boolean bomb(int[] place){
         // method to check if a place has a bomb
+        return false;
     }
     
     public void flag(int[] place){
@@ -52,8 +53,9 @@ public class MineSweeper
         // method that runs the main part of making a move on the board
     }
     
-    public void done(){
+    public boolean done(){
         // checks if all spots on the board except the bombs have been uncovered
+        return true;
     }
     
     
