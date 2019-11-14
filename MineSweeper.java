@@ -9,7 +9,6 @@ import java.util.*;
 public class MineSweeper
 {
     private String[][] fieldForPlay = new String[9][9];
-    private String[][] fieldWithBombs = new String[9][9];
     private ArrayList<int[]> bombSpots = new ArrayList<int[]>();
     Human mh = new Human();
     
@@ -18,7 +17,6 @@ public class MineSweeper
     public MineSweeper(Human mh){
         this.mh = mh;
         this.fieldForPlay = fieldForPlay;
-        this.fieldWithBombs = fieldWithBombs;
         this.bombSpots = bombSpots;
     }
     
@@ -28,11 +26,6 @@ public class MineSweeper
     
     public void initializeBombSpots(){
         // method to add to the list of where the 10 bombs are on the board
-    }
-    
-    public void initializeBoard(){
-        // puts the 10 bombs on fieldWithBombs
-        // "C" for where there is no bomb and "B" for where there is a bomb
     }
     
     public void printField(){
