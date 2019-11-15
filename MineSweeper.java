@@ -40,8 +40,8 @@ public class MineSweeper
      */
     public void initializeBombSpots(){
         // method to add to the list of where the 10 bombs are on the board
-        int bombs = 0;
-        while(bombs < 10){
+        int bombsAdded = 0;
+        while(bombsAdded < 10){
             int x = (int) (Math.random() * 10.0);
             int y = (int) (Math.random() * 10.0);
             int[] spot = new int[]{x,y};
@@ -49,7 +49,7 @@ public class MineSweeper
                 continue;
             }
             this.bombSpots.add(spot);
-            bombs++;
+            bombsAdded++;
         }
     }
     
