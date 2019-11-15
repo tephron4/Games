@@ -43,6 +43,12 @@ public class MineSweeper
         int bombs = 0;
         while(bombs < 10){
             int x = (int) (Math.random() * 10.0);
+            int y = (int) (Math.random() * 10.0);
+            int[] spot = new int[]{x,y};
+            if(this.bombSpots.contains(spot)){
+                continue;
+            }
+            this.bombSpots.add(spot);
             bombs++;
         }
     }
