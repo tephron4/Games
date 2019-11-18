@@ -55,6 +55,7 @@ public class GameInterface
                 MineSweeper m = new MineSweeper(h);
                 m.play();
             }
+            // will work on battleship at a later date
             else if(game.equals(bs)){
                 System.out.print('\u000C');
                 BattleShip b = new BattleShip(h,c);
