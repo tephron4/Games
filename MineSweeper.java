@@ -33,10 +33,10 @@ public class MineSweeper
      */
     public void play(){
         // main method that runs through playing the game
-        this.initializeField();
-        this.printField();
-        this.flag(new int[]{4,3});
-        this.printField();
+        //this.initializeField();
+        //this.printField();
+        //this.flag(new int[]{4,3});
+        //this.printField();
     }
     
     /**
