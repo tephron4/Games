@@ -9,7 +9,7 @@ import java.util.*;
 public class MineSweeper
 {
     /** A 2D array of Strings for the board/field to play on */
-    private String[][] fieldForPlay = new String[9][9];
+    private String[][] field = new String[9][9];
     /** An array of integer arrays for the coordinates of the bombs */
     private ArrayList<int[]> bombSpots = new ArrayList<int[]>();
     /** A new instance of a Human */
@@ -24,7 +24,7 @@ public class MineSweeper
      */
     public MineSweeper(Human mh){
         this.mh = mh;
-        this.fieldForPlay = fieldForPlay;
+        this.field = field;
         this.bombSpots = bombSpots;
     }
     
@@ -34,6 +34,8 @@ public class MineSweeper
     public void play(){
         // main method that runs through playing the game
         this.initializeField();
+        this.printField();
+        this.flag(new int[]{4,3});
         this.printField();
     }
     
@@ -56,17 +58,12 @@ public class MineSweeper
     }
     
     /**
-     * A method to initilize all the places on fieldToPlay to " "
+     * A method to initilize all the places on field to " "
      */
     public void initializeField(){
-<<<<<<< HEAD
         for(int i=0;i<9;i++){
             for(int j=0;j<9;j++){
-=======
-        for(int i=0;i<10;i++){
-            for(int j=0;j<10;j++){
->>>>>>> b74cb3f2886233c7c18de92e0521998aa5d7e173
-                this.fieldForPlay[i][j] = " ";
+                this.field[i][j] = " ";
             }
         }
     }
@@ -77,88 +74,44 @@ public class MineSweeper
     public void printField(){
         System.out.println("");
         System.out.println("");
-<<<<<<< HEAD
         System.out.println("  0 1 2 3 4 5 6 7 8");
         System.out.println("  - - - - - - - - -");
-        System.out.println("5|" + this.fieldForPlay[5][5] + "|" + this.fieldForPlay[5][1] + "|" + this.fieldForPlay[5][2] + "|" +
-                            this.fieldForPlay[5][3] + "|" + this.fieldForPlay[5][4] + "|" + this.fieldForPlay[5][5] + "|" + this.fieldForPlay[5][6] +
-                            "|" + this.fieldForPlay[5][7] + "|" + this.fieldForPlay[5][8] + "|");
+        System.out.println("5|" + this.field[5][5] + "|" + this.field[5][1] + "|" + this.field[5][2] + "|" +
+                            this.field[5][3] + "|" + this.field[5][4] + "|" + this.field[5][5] + "|" + this.field[5][6] +
+                            "|" + this.field[5][7] + "|" + this.field[5][8] + "|");
         System.out.println("  - - - - - - - - -");
-        System.out.println("1|" + this.fieldForPlay[1][5] + "|" + this.fieldForPlay[1][1] + "|" + this.fieldForPlay[1][2] + "|" +
-                            this.fieldForPlay[1][3] + "|" + this.fieldForPlay[1][4] + "|" + this.fieldForPlay[1][5] + "|" + this.fieldForPlay[1][6] +
-                            "|" + this.fieldForPlay[1][7] + "|" + this.fieldForPlay[1][8] + "|");
+        System.out.println("1|" + this.field[1][5] + "|" + this.field[1][1] + "|" + this.field[1][2] + "|" +
+                            this.field[1][3] + "|" + this.field[1][4] + "|" + this.field[1][5] + "|" + this.field[1][6] +
+                            "|" + this.field[1][7] + "|" + this.field[1][8] + "|");
         System.out.println("  - - - - - - - - -");
-        System.out.println("2|" + this.fieldForPlay[2][5] + "|" + this.fieldForPlay[2][1] + "|" + this.fieldForPlay[2][2] + "|" +
-                            this.fieldForPlay[2][3] + "|" + this.fieldForPlay[2][4] + "|" + this.fieldForPlay[2][5] + "|" + this.fieldForPlay[2][6] +
-                            "|" + this.fieldForPlay[2][7] + "|" + this.fieldForPlay[2][8] + "|");
+        System.out.println("2|" + this.field[2][5] + "|" + this.field[2][1] + "|" + this.field[2][2] + "|" +
+                            this.field[2][3] + "|" + this.field[2][4] + "|" + this.field[2][5] + "|" + this.field[2][6] +
+                            "|" + this.field[2][7] + "|" + this.field[2][8] + "|");
         System.out.println("  - - - - - - - - -");
-        System.out.println("3|" + this.fieldForPlay[3][5] + "|" + this.fieldForPlay[3][1] + "|" + this.fieldForPlay[3][2] + "|" +
-                            this.fieldForPlay[3][3] + "|" + this.fieldForPlay[3][4] + "|" + this.fieldForPlay[3][5] + "|" + this.fieldForPlay[3][6] +
-                            "|" + this.fieldForPlay[3][7] + "|" + this.fieldForPlay[3][8] + "|");
+        System.out.println("3|" + this.field[3][5] + "|" + this.field[3][1] + "|" + this.field[3][2] + "|" +
+                            this.field[3][3] + "|" + this.field[3][4] + "|" + this.field[3][5] + "|" + this.field[3][6] +
+                            "|" + this.field[3][7] + "|" + this.field[3][8] + "|");
         System.out.println("  - - - - - - - - -");
-        System.out.println("4|" + this.fieldForPlay[4][5] + "|" + this.fieldForPlay[4][1] + "|" + this.fieldForPlay[4][2] + "|" +
-                            this.fieldForPlay[4][3] + "|" + this.fieldForPlay[4][4] + "|" + this.fieldForPlay[4][5] + "|" + this.fieldForPlay[4][6] +
-                            "|" + this.fieldForPlay[4][7] + "|" + this.fieldForPlay[4][8] + "|");
+        System.out.println("4|" + this.field[4][5] + "|" + this.field[4][1] + "|" + this.field[4][2] + "|" +
+                            this.field[4][3] + "|" + this.field[4][4] + "|" + this.field[4][5] + "|" + this.field[4][6] +
+                            "|" + this.field[4][7] + "|" + this.field[4][8] + "|");
         System.out.println("  - - - - - - - - -");
-        System.out.println("5|" + this.fieldForPlay[5][0] + "|" + this.fieldForPlay[5][1] + "|" + this.fieldForPlay[5][2] + "|" +
-                            this.fieldForPlay[5][3] + "|" + this.fieldForPlay[5][4] + "|" + this.fieldForPlay[5][5] + "|" + this.fieldForPlay[5][6] +
-                            "|" + this.fieldForPlay[5][7] + "|" + this.fieldForPlay[5][8] + "|");
+        System.out.println("5|" + this.field[5][0] + "|" + this.field[5][1] + "|" + this.field[5][2] + "|" +
+                            this.field[5][3] + "|" + this.field[5][4] + "|" + this.field[5][5] + "|" + this.field[5][6] +
+                            "|" + this.field[5][7] + "|" + this.field[5][8] + "|");
         System.out.println("  - - - - - - - - -");
-        System.out.println("6|" + this.fieldForPlay[6][0] + "|" + this.fieldForPlay[6][1] + "|" + this.fieldForPlay[6][2] + "|" +
-                            this.fieldForPlay[6][3] + "|" + this.fieldForPlay[6][4] + "|" + this.fieldForPlay[6][5] + "|" + this.fieldForPlay[6][6] +
-                            "|" + this.fieldForPlay[6][7] + "|" + this.fieldForPlay[6][8] + "|");
+        System.out.println("6|" + this.field[6][0] + "|" + this.field[6][1] + "|" + this.field[6][2] + "|" +
+                            this.field[6][3] + "|" + this.field[6][4] + "|" + this.field[6][5] + "|" + this.field[6][6] +
+                            "|" + this.field[6][7] + "|" + this.field[6][8] + "|");
         System.out.println("  - - - - - - - - -");
-        System.out.println("7|" + this.fieldForPlay[7][0] + "|" + this.fieldForPlay[7][1] + "|" + this.fieldForPlay[7][2] + "|" +
-                            this.fieldForPlay[7][3] + "|" + this.fieldForPlay[7][4] + "|" + this.fieldForPlay[7][5] + "|" + this.fieldForPlay[7][6] +
-                            "|" + this.fieldForPlay[7][7] + "|" + this.fieldForPlay[7][8] + "|");
+        System.out.println("7|" + this.field[7][0] + "|" + this.field[7][1] + "|" + this.field[7][2] + "|" +
+                            this.field[7][3] + "|" + this.field[7][4] + "|" + this.field[7][5] + "|" + this.field[7][6] +
+                            "|" + this.field[7][7] + "|" + this.field[7][8] + "|");
         System.out.println("  - - - - - - - - -");
-        System.out.println("8|" + this.fieldForPlay[8][0] + "|" + this.fieldForPlay[8][1] + "|" + this.fieldForPlay[8][2] + "|" +
-                            this.fieldForPlay[8][3] + "|" + this.fieldForPlay[8][4] + "|" + this.fieldForPlay[8][5] + "|" + this.fieldForPlay[8][6] +
-                            "|" + this.fieldForPlay[8][7] + "|" + this.fieldForPlay[8][8] + "|");
+        System.out.println("8|" + this.field[8][0] + "|" + this.field[8][1] + "|" + this.field[8][2] + "|" +
+                            this.field[8][3] + "|" + this.field[8][4] + "|" + this.field[8][5] + "|" + this.field[8][6] +
+                            "|" + this.field[8][7] + "|" + this.field[8][8] + "|");
         System.out.println("  - - - - - - - - -");
-=======
-        System.out.println("  0 1 2 3 4 5 6 7 8 9");
-        System.out.println("  _ _ _ _ _ _ _ _ _ _");
-        System.out.println("5|" + this.fieldForPlay[5][5] + "|" + this.fieldForPlay[5][1] + "|" + this.fieldForPlay[5][2] + "|" +
-                            this.fieldForPlay[5][3] + "|" + this.fieldForPlay[5][4] + "|" + this.fieldForPlay[5][5] + "|" + this.fieldForPlay[5][6] +
-                            "|" + this.fieldForPlay[5][7] + "|" + this.fieldForPlay[5][8] + "|" + this.fieldForPlay[5][9]);
-        System.out.println("  _ _ _ _ _ _ _ _ _ _");
-        System.out.println("1|" + this.fieldForPlay[1][5] + "|" + this.fieldForPlay[1][1] + "|" + this.fieldForPlay[1][2] + "|" +
-                            this.fieldForPlay[1][3] + "|" + this.fieldForPlay[1][4] + "|" + this.fieldForPlay[1][5] + "|" + this.fieldForPlay[1][6] +
-                            "|" + this.fieldForPlay[1][7] + "|" + this.fieldForPlay[1][8] + "|" + this.fieldForPlay[1][9]);
-                            System.out.println("  _ _ _ _ _ _ _ _ _ _");
-        System.out.println("2|" + this.fieldForPlay[2][5] + "|" + this.fieldForPlay[2][1] + "|" + this.fieldForPlay[2][2] + "|" +
-                            this.fieldForPlay[2][3] + "|" + this.fieldForPlay[2][4] + "|" + this.fieldForPlay[2][5] + "|" + this.fieldForPlay[2][6] +
-                            "|" + this.fieldForPlay[2][7] + "|" + this.fieldForPlay[2][8] + "|" + this.fieldForPlay[2][9]);
-        System.out.println("  _ _ _ _ _ _ _ _ _ _");
-        System.out.println("3|" + this.fieldForPlay[3][5] + "|" + this.fieldForPlay[3][1] + "|" + this.fieldForPlay[3][2] + "|" +
-                            this.fieldForPlay[3][3] + "|" + this.fieldForPlay[3][4] + "|" + this.fieldForPlay[3][5] + "|" + this.fieldForPlay[3][6] +
-                            "|" + this.fieldForPlay[3][7] + "|" + this.fieldForPlay[3][8] + "|" + this.fieldForPlay[3][9]);
-        System.out.println("  _ _ _ _ _ _ _ _ _ _");
-        System.out.println("4|" + this.fieldForPlay[4][5] + "|" + this.fieldForPlay[4][1] + "|" + this.fieldForPlay[4][2] + "|" +
-                            this.fieldForPlay[4][3] + "|" + this.fieldForPlay[4][4] + "|" + this.fieldForPlay[4][5] + "|" + this.fieldForPlay[4][6] +
-                            "|" + this.fieldForPlay[4][7] + "|" + this.fieldForPlay[4][8] + "|" + this.fieldForPlay[4][9]);
-        System.out.println("  _ _ _ _ _ _ _ _ _ _");
-        System.out.println("5|" + this.fieldForPlay[5][0] + "|" + this.fieldForPlay[5][1] + "|" + this.fieldForPlay[5][2] + "|" +
-                            this.fieldForPlay[5][3] + "|" + this.fieldForPlay[5][4] + "|" + this.fieldForPlay[5][5] + "|" + this.fieldForPlay[5][6] +
-                            "|" + this.fieldForPlay[5][7] + "|" + this.fieldForPlay[5][8] + "|" + this.fieldForPlay[5][9]);
-        System.out.println("  _ _ _ _ _ _ _ _ _ _");
-        System.out.println("6|" + this.fieldForPlay[6][0] + "|" + this.fieldForPlay[6][1] + "|" + this.fieldForPlay[6][2] + "|" +
-                            this.fieldForPlay[6][3] + "|" + this.fieldForPlay[6][4] + "|" + this.fieldForPlay[6][5] + "|" + this.fieldForPlay[6][6] +
-                            "|" + this.fieldForPlay[6][7] + "|" + this.fieldForPlay[6][8] + "|" + this.fieldForPlay[6][9]);
-        System.out.println("  _ _ _ _ _ _ _ _ _ _");
-        System.out.println("7|" + this.fieldForPlay[7][0] + "|" + this.fieldForPlay[7][1] + "|" + this.fieldForPlay[7][2] + "|" +
-                            this.fieldForPlay[7][3] + "|" + this.fieldForPlay[7][4] + "|" + this.fieldForPlay[7][5] + "|" + this.fieldForPlay[7][6] +
-                            "|" + this.fieldForPlay[7][7] + "|" + this.fieldForPlay[7][8] + "|" + this.fieldForPlay[7][9]);
-        System.out.println("  _ _ _ _ _ _ _ _ _ _");
-        System.out.println("8|" + this.fieldForPlay[8][0] + "|" + this.fieldForPlay[8][1] + "|" + this.fieldForPlay[8][2] + "|" +
-                            this.fieldForPlay[8][3] + "|" + this.fieldForPlay[8][4] + "|" + this.fieldForPlay[8][5] + "|" + this.fieldForPlay[8][6] +
-                            "|" + this.fieldForPlay[8][7] + "|" + this.fieldForPlay[8][8] + "|" + this.fieldForPlay[8][9]);
-        System.out.println("  _ _ _ _ _ _ _ _ _ _");
-        System.out.println("9|" + this.fieldForPlay[9][0] + "|" + this.fieldForPlay[9][1] + "|" + this.fieldForPlay[9][2] + "|" +
-                            this.fieldForPlay[9][3] + "|" + this.fieldForPlay[9][4] + "|" + this.fieldForPlay[9][5] + "|" + this.fieldForPlay[9][6] +
-                            "|" + this.fieldForPlay[9][7] + "|" + this.fieldForPlay[9][8] + "|" + this.fieldForPlay[9][9]);
->>>>>>> b74cb3f2886233c7c18de92e0521998aa5d7e173
         System.out.println("");
         System.out.println("");
     }
@@ -176,19 +129,101 @@ public class MineSweeper
     }
     
     /**
+     * The main method to get a move and do what's needed to execute the move
+     */
+    public void move(){
+        // method that runs the main part of making a move on the board
+    }
+
+    /**
+     * A method to execute the move
+     *
+     * @param place an integer array with the coordinates to be move to
+     */
+    public void updateField(int[] place){
+
+    }
+
+    /**
+     * A method to count the number of bombs directly around a given place
+     *
+     * @param place an integer array with the coordinates to check around
+     */
+    public int bombsArround(int[] place){
+        int count = 0;
+        if(place[0] == 0){
+            if(place[1] == 0){
+                if(this.bomb(new int[]{0,1})) count++;
+                if(this.bomb(new int[]{1,1})) count++;
+                if(this.bomb(new int[]{1,0})) count++;
+            }
+            else if(place[1] == 8){
+                if(this.bomb(new int[]{0,7})) count++;
+                if(this.bomb(new int[]{1,7})) count++;
+                if(this.bomb(new int[]{1,8})) count++;
+            }
+            else{
+                if(this.bomb(new int[]{0,place[1]-1})) count++;
+                if(this.bomb(new int[]{1,place[1]-1})) count++;
+                if(this.bomb(new int[]{1,place[1]})) count++;
+                if(this.bomb(new int[]{1,place[1]+1})) count++;
+                if(this.bomb(new int[]{0,place[1]+1})) count++;
+            }
+        }
+        else if(place[0] == 8){
+            if(place[1] == 0){
+                if(this.bomb(new int[]{7,0})) count++;
+                if(this.bomb(new int[]{7,1})) count++;
+                if(this.bomb(new int[]{8,1})) count++;
+            }
+            else if(place[1] == 8){
+                if(this.bomb(new int[]{8,7})) count++;
+                if(this.bomb(new int[]{7,7})) count++;
+                if(this.bomb(new int[]{7,8})) count++;
+            }
+            else{
+                if(this.bomb(new int[]{8,place[1]-1})) count++;
+                if(this.bomb(new int[]{7,place[1]-1})) count++;
+                if(this.bomb(new int[]{7,place[1]})) count++;
+                if(this.bomb(new int[]{7,place[1]+1})) count++;
+                if(this.bomb(new int[]{8,place[1]+1})) count++;
+            }
+        }
+        else if(place[1] == 0){
+            if(this.bomb(new int[]{place[0]-1,0})) count++;
+            if(this.bomb(new int[]{place[0]-1,1})) count++;
+            if(this.bomb(new int[]{place[0],1})) count++;
+            if(this.bomb(new int[]{place[0]+1,1})) count++;
+            if(this.bomb(new int[]{place[0]+1,0})) count++;
+        }
+        else if(place[1] == 8){
+            if(this.bomb(new int[]{place[0]-1,8})) count++;
+            if(this.bomb(new int[]{place[0]-1,7})) count++;
+            if(this.bomb(new int[]{place[0],7})) count++;
+            if(this.bomb(new int[]{place[0]+1,7})) count++;
+            if(this.bomb(new int[]{place[0]+1,8})) count++;
+        }
+        else{
+            if(this.bomb(new int[]{place[0],place[1]-1})) count++;
+            if(this.bomb(new int[]{place[0]-1,place[1]-1})) count++;
+            if(this.bomb(new int[]{place[0]-1,place[1]})) count++;
+            if(this.bomb(new int[]{place[0]-1,place[1]+1})) count++;
+            if(this.bomb(new int[]{place[0],place[1]+1})) count++;
+            if(this.bomb(new int[]{place[0]+1,place[1]+1})) count++;
+            if(this.bomb(new int[]{place[0]+1,place[1]})) count++;
+            if(this.bomb(new int[]{place[0]+1,place[1]-1})) count++;
+        }
+        return count;
+    }
+
+    /**
      * A method to flag a place: will put an "F" on the field/board
      * 
      * @param place an integer array with the coordinates to be flagged
      */
     public void flag(int[] place){
         // method to flag a spot
-    }
-    
-    /**
-     * The main method to get and exicute a move
-     */
-    public void move(){
-        // method that runs the main part of making a move on the board
+        this.field[place[0]][place[1]] = "F";
     }
     
     /**
@@ -197,7 +232,7 @@ public class MineSweeper
     public void addBombSpots(){
         // method that displays the bombs on the field when the game ends
         for(int[] spot: this.bombSpots){
-            this.fieldForPlay[spot[0]][spot[1]] = "B";
+            this.field[spot[0]][spot[1]] = "B";
         }
     }
     
@@ -208,6 +243,23 @@ public class MineSweeper
      */
     public boolean done(){
         // checks if all spots on the board except the bombs have been uncovered
+        for(int i=0;i<9;i++){
+            for(int j=0;j<9;j++){
+                if(!this.bomb(new int[]{i,j}) && this.field[i][j].equals(" ")){
+                    return false;
+                }
+            }
+        }
         return true;
+    }
+
+    /**
+     * A method to check that a given place is a valid place to move
+     * 
+     * @param place an integer array with the coordinates to be checked
+     */
+    public boolean validMove(int[] place){
+        if(this.field[place[0]][place[1]].equals(" ")) return true;
+        return false;
     }
 }
