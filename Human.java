@@ -22,7 +22,7 @@ public class Human
     
     Scanner sc = new Scanner(System.in);
     
-    public Human(){};
+    public Human(){}
     
     public Human(String username){
         this.username = username;
@@ -103,6 +103,12 @@ public class Human
             }
         }
         return mv;
+    }
+    
+    public int[] mPlay(){
+        int[] move = new int[2];
+        
+        return move;
     }
     
     public boolean validMove(String[] board, int move){
