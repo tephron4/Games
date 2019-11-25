@@ -166,6 +166,8 @@ public class Human
      * @param game a String for the name of the game
      */
     public void printStats(String game){
+        System.out.println("");
+        System.out.println("");
         if(game.equals("t")) System.out.println("TicTacToe Game Stats:");
         if(game.equals("o")) System.out.println("Othelo Game Stats:");
         if(game.equals("m")) System.out.println("MineSweeper Game Stats:");
