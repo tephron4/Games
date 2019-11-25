@@ -18,6 +18,8 @@ public class MineSweeper
     private int bombs = 10;
     /** A variable to keep track of if they've hit a bomb or not*/
     private int lives = 1;
+    /** A Scanner object */
+    Scanner s = new Scanner(System.in);
 
     /**
      * A constructor method for the MineSweeper class
@@ -70,7 +72,12 @@ public class MineSweeper
                 }
                 System.out.println("");
             }
+            if(!this.keepPlaying()){
+                playing = false;
+            }
         }
+        this.mh.printStats("m");
+        this.printGoodbye();
     }
 
     /**
@@ -84,6 +91,37 @@ public class MineSweeper
         System.out.println("");
         System.out.println("The field is 9x9 and there are 10 bombs")
         System.out.println("");
+    }
+
+    public void printGoodbye(){
+        System.out.println("");
+        System.out.println("Thanks for playing MineSweeper " + Human.username + "!");
+        System.out.println("");
+        System.out.println("");
+    }
+
+    /**
+     * A method to find out if the player wants to keep playing
+     * 
+     * @return true, if the player wants to keep playing; false otherwise
+     */
+    public boolean keepPlaying(){
+        boolean asking = true;
+        while(asking){
+            System.out.println("Do you want to keep playing? (y/n)");
+            String ans = s.next().toLowerCase();
+            if(ans.charAt(0) == 'y'){
+                return true;
+            }
+            else if(ans.charAt(0) == 'n'){
+                return false;
+            }
+            else{
+                System.out.println("");
+                System.out.println("Please say either yes or no");
+                System.out.println("")
+            }
+        }
     }
     
     /**
