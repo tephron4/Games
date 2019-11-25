@@ -87,15 +87,15 @@ public class MineSweeper
     public void printWelcome(){
         System.out.println("");
         System.out.println("");
-        System.out.println("Welcome to MineSweeper " + Human.username + "!");
+        System.out.println("Welcome to MineSweeper " + this.mh.getUsername() + "!");
         System.out.println("");
-        System.out.println("The field is 9x9 and there are 10 bombs")
+        System.out.println("The field is 9x9 and there are 10 bombs");
         System.out.println("");
     }
 
     public void printGoodbye(){
         System.out.println("");
-        System.out.println("Thanks for playing MineSweeper " + Human.username + "!");
+        System.out.println("Thanks for playing MineSweeper " + this.mh.getUsername() + "!");
         System.out.println("");
         System.out.println("");
     }
@@ -119,9 +119,10 @@ public class MineSweeper
             else{
                 System.out.println("");
                 System.out.println("Please say either yes or no");
-                System.out.println("")
+                System.out.println("");
             }
         }
+        return true;
     }
     
     /**

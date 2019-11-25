@@ -175,7 +175,7 @@ public class Human
         System.out.println("Wins: " + this.wins(game));
         System.out.println("Losses: " + this.losses(game));
         if(!game.equals("m")) System.out.println("Ties: " + this.ties(game));
-        if(this.lost(game) == 0){
+        if(this.losses(game) == 0){
             System.out.println("Win/Loss Ratio: " + this.wins(game));
         }
         else{
@@ -251,7 +251,7 @@ public class Human
      * @param game a String representing the game
      * @return an integer representing the number of losses in a given game
      */
-    public int wosses(String game){
+    public int losses(String game){
         if(game.equals("t")) return this.tLosses;
         if(game.equals("o")) return this.oLosses;
         if(game.equals("m")) return this.mLosses;
