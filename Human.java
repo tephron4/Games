@@ -8,22 +8,38 @@
 import java.util.*;
 public class Human
 {
+    /** A string for the player's piece */
     String piece;
+    /** A string for the player's username */
     private String username;
     //private String password;
+    /** Integers to keep track of the players TicTacToe stats */
     private int tWins;
     private int tLosses;
     private int tTies;
     private int tGamesPlayed;
+    /** Integers to keep track of the players Othelo stats */
     private int oWins;
     private int oLosses;
     private int oTies;
     private int oGamesPlayed;
-    
+    /** Integers to keep track of the players MineSweeper stats */
+    private int mWins;
+    private int mLosses;
+    private int mGamesPlayed;
+    /** A basic Scanner object */
     Scanner sc = new Scanner(System.in);
     
+    /**
+     * An empty Human constructor
+     */
     public Human(){}
     
+    /**
+     * A Human constructor with username
+     *
+     * @param username a String for the player's username
+     */
     public Human(String username){
         this.username = username;
         //this.password = password;
@@ -38,6 +54,12 @@ public class Human
         this.oGamesPlayed = 0;
     }
     
+    /**
+     * A method to get a player's TicTacToe play
+     *
+     * @param board the game board (a String array)
+     * @return an integer corresponding to where they want to move on the board
+     */
     public int tPlay(String[] board){
         int mv = -1;
         boolean gettingMove = true;
@@ -63,6 +85,12 @@ public class Human
         return mv;
     }
     
+    /**
+     * A method for getting the player's Othelo move
+     * 
+     * @param board the game board (a 2D String array)
+     * @return an integer array containing the coordinates of their move
+     */
     public int[] oPlay(String[][] board){
         int[] mv = new int[2];
         boolean gettingMove = true;
@@ -105,91 +133,151 @@ public class Human
         return mv;
     }
     
+    /**
+     * A method for getting the player's MineSweeper move
+     * 
+     * @return an integer array with the coordinates of where they want to move
+     */
     public int[] mPlay(){
         int[] move = new int[2];
         
         return move;
     }
     
+    /**
+     * A method for checking that a move is valid on a 1D board
+     */
     public boolean validMove(String[] board, int move){
         if(board[move].equals(" ")) return true;
         return false;
     }
+
+    /**
+     * A method for checking that a move is valid on a 2D board
+     */
     public boolean validMove(String[][] board, int[] move){
         if(board[move[0]][move[1]].equals(" ")) return true;
         return false;
     }
     
+    /**
+     * A methdo for printing the player's stats for a given game
+     * 
+     * @param game a String for the name of the game
+     */
     public void printStats(String game){
-        if(game.equals("t")){
-            System.out.println("TicTacToe Game Stats:");
-            System.out.println("Wins: " + this.tWins);
-            System.out.println("Losses: " + this.tLosses);
-            System.out.println("Ties: " + this.tTies);
-            if(this.tLosses == 0){
-                System.out.println("Win/Loss Ratio: " + this.tWins);
-            }
-            else{
-                double ratio = this.tWins / this.tLosses;
-                System.out.println("Win/Loss Ratio: " + ratio);
-            }
+        if(game.equals("t")) System.out.println("TicTacToe Game Stats:");
+        if(game.equals("o")) System.out.println("Othelo Game Stats:");
+        if(game.equals("m")) System.out.println("MineSweeper Game Stats:");
+        System.out.println("GamesPlayed: " + this.gamesPlayed(game));
+        System.out.println("Wins: " + this.wins(game));
+        System.out.println("Losses: " + this.losses(game));
+        if(!game.equals("m")) System.out.println("Ties: " + this.ties(game));
+        if(this.lost(game) == 0){
+            System.out.println("Win/Loss Ratio: " + this.wins(game));
         }
-        if(game.equals("o")){
-            System.out.println("Othelo Game Stats:");
-            System.out.println("Wins: " + this.oWins);
-            System.out.println("Losses: " + this.oLosses);
-            System.out.println("Ties: " + this.oTies);
-            if(this.oLosses == 0){
-                System.out.println("Win/Loss Ratio: " + this.oWins);
-            }
-            else{
-                double ratio = this.oWins / this.oLosses;
-                System.out.println("Win/Loss Ratio: " + ratio);
-            }
+        else{
+            double ratio = this.wins(game) / this.losses(game);
+            System.out.println("Win/Loss Ratio: " + ratio);
         }
         System.out.println("");
     }
+
+    /** 
+     * A method for incrementing the win stat of a given game
+     */
     public void won(String game){
         if(game.equals("t")) this.tWins++;
         if(game.equals("o")) this.oWins++;
+        if(game.equals("m")) this.mWins++;
     }
+
+    /** 
+     * A method for incrementing the loss stat of a given game
+     */
     public void lost(String game){
         if(game.equals("t")) this.tLosses++;
         if(game.equals("o")) this.oLosses++;
+        if(game.equals("m")) this.mLosses++;
     }
+
+    /** 
+     * A method for incrementing the tie stat of a given game
+     */
     public void tied(String game){
         if(game.equals("t")) this.tTies++;
         if(game.equals("o")) this.oTies++;
     }
+
+    /** 
+     * A method for incrementing the number of games a given game played
+     */
     public void played(String game){
         if(game.equals("t")) this.tGamesPlayed++;
         if(game.equals("o")) this.oGamesPlayed++;
+        if(game.equals("m")) this.mGamesPlayed++;
     }
     
+    /** 
+     * A method for getting the player's username
+     *
+     * @return a String: the player's username
+     */
     public String getUsername(){
         return this.username;
     }
     /*public boolean checkPassword(String p){
         return (this.password.equals(p));
     }*/
-    public int Wins(String game){
+
+    /** 
+     * A method for getting the wins of a given game
+     *
+     * @param game a String representing the game
+     * @return an integer representing the number of wins in a given game
+     */
+    public int wins(String game){
         if(game.equals("t")) return this.tWins;
         if(game.equals("o")) return this.oWins;
+        if(game.equals("m")) return this.mWins;
         return 0;
     }
-    public int Losses(String game){
+
+    /** 
+     * A method for getting the losses of a given game
+     *
+     * @param game a String representing the game
+     * @return an integer representing the number of losses in a given game
+     */
+    public int wosses(String game){
         if(game.equals("t")) return this.tLosses;
         if(game.equals("o")) return this.oLosses;
+        if(game.equals("m")) return this.mLosses;
         return 0;
     }
-    public int tTies(String game){
+
+    /** 
+     * A method for getting the ties of a given game
+     *
+     * @param game a String representing the game
+     * @return an integer representing the number of ties in a given game
+     */
+    public int ties(String game){
         if(game.equals("t")) return this.tTies;
         if(game.equals("o")) return this.oTies;
         return 0;
     }
-    public int tGamesPlayed(String game){
+
+    /** 
+     * A method for getting the number of games played of a given game
+     *
+     * @param game a String representing the game
+     * @return an integer representing the number of games played in a given game
+     */
+    public int gamesPlayed(String game){
         if(game.equals("t")) return this.tGamesPlayed;
         if(game.equals("o")) return this.oGamesPlayed;
+        if(game.equals("m")) return this.mGamesPlayed;
         return 0;
     }
 }
