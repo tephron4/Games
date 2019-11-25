@@ -41,6 +41,49 @@ public class MineSweeper
         //this.flag(new int[]{4,3});
         //this.addBombSpots();
         //this.printField();
+        this.printWelcome();
+        boolean playing = true;
+        while(playing){
+            this.initializeField();
+            this.initializeBombSpots();
+            boolean moving = true;
+            while(moving){
+                this.printField();
+                this.move();
+                if(this.lives == 0){
+                    System.out.println("You lost :(");
+                    System.out.println("");
+                    this.addBombSpots();
+                    this.printField();
+                    this.mh.lost("m");
+                    moving = false;
+                    continue;
+                }
+                if(this.done()){
+                    System.out.println("You won!");
+                    System.out.println("");
+                    this.addBombSpots();
+                    this.printField();
+                    this.mh.won("m");
+                    moving = false;
+                    continue;
+                }
+                System.out.println("");
+            }
+        }
+    }
+
+    /**
+     * A basic method for printing a welcome message
+     *
+     */
+    public void printWelcome(){
+        System.out.println("");
+        System.out.println("");
+        System.out.println("Welcome to MineSweeper " + Human.username + "!");
+        System.out.println("");
+        System.out.println("The field is 9x9 and there are 10 bombs")
+        System.out.println("");
     }
     
     /**
@@ -334,7 +377,12 @@ public class MineSweeper
      */
     public void flag(int[] place){
         // method to flag a spot
-        this.field[place[0]][place[1]] = "F";
+        if(this.field[place[0]][place[1]].equals("F")){
+            this.field[place[0]][place[1]] = " ";
+        }
+        else{
+            this.field[place[0]][place[1]] = "F";
+        }
     }
     
     /**
