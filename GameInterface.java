@@ -21,7 +21,7 @@ public class GameInterface
     public static void main(String[] args){
         System.out.print('\u000C');
         GameInterface gi = new GameInterface();
-        Players p = new Players();
+        //Players p = new Players();
         Human h = new Human();
         Computer c = new Computer(" ");
         Scanner s = new Scanner(System.in);
