@@ -48,11 +48,14 @@ public class MineSweeper
         while(playing){
             this.initializeField();
             this.initializeBombSpots();
+            //this.printField();
             boolean moving = true;
             while(moving){
-                this.printField();
-                this.move();
-                if(this.lives == 0){
+                //this.printField();
+                String x = this.move();
+                if(x.equals("lost")){
+                    System.out.println("");
+                    System.out.println("");
                     System.out.println("You lost :(");
                     System.out.println("");
                     this.addBombSpots();
@@ -61,7 +64,7 @@ public class MineSweeper
                     moving = false;
                     continue;
                 }
-                if(this.done()){
+                else if(x.equals("won")){
                     System.out.println("You won!");
                     System.out.println("");
                     this.addBombSpots();
@@ -69,6 +72,30 @@ public class MineSweeper
                     this.mh.won("m");
                     moving = false;
                     continue;
+                }
+                else if(x.equals("quit")){
+                    Scanner s = new Scanner(System.in);
+                    boolean ask = true;
+                    while(ask){
+                        System.out.println("");
+                        System.out.println("Are you sure you want to quit? (y/n)");
+                        char a = s.nextLine().toLowerCase().charAt(0);
+                        if(a == 'n'){
+                            ask = false;
+                            continue;
+                        }
+                        else if(a == 'y'){
+                            this.addBombSpots();
+                            this.printField();
+                            moving = false;
+                            ask = false;
+                            continue;
+                        }
+                        else{
+                            System.out.println("");
+                            System.out.println("Please give a valid input");
+                        }
+                    }
                 }
                 System.out.println("");
             }
@@ -129,6 +156,7 @@ public class MineSweeper
      * A method to get all the coordinates for the bombs at random
      */
     public void initializeBombSpots(){
+        this.bombSpots = new ArrayList<int[]>();
         // method to add to the list of where the 10 bombs are on the board
         int bombsAdded = 0;
         while(this.bombSpots.size() < 10){
@@ -147,7 +175,7 @@ public class MineSweeper
                 this.bombSpots.add(spot);
             }
         }
-        System.out.println(this.bombSpots.size());
+        //System.out.println(this.bombSpots.size());
         for(int[] spot: this.bombSpots){
             System.out.println("(" + spot[0] + "," + spot[1] + ") , ");
         }
@@ -220,15 +248,63 @@ public class MineSweeper
      */
     public boolean bomb(int[] place){
         // method to check if a place has a bomb
-        if(this.bombSpots.contains(place)) return true;
+        for(int i=0;i<this.bombSpots.size();i++){
+            if(this.bombSpots.get(i)[0]==place[0] &&
+                this.bombSpots.get(i)[1]==place[1]) return true;
+        }
+        //if(this.bombSpots.contains(place)) return true;
         return false;
     }
     
     /**
      * The main method to get a move and do what's needed to execute the move
+     * 
+     * @return false if "quit" or "exit" were entered, true otherwise;
      */
-    public void move(){
+    public String move(){
         // method that runs the main part of making a move on the board
+        Scanner s = new Scanner(System.in);
+        while(!this.done()){
+            boolean flag = false;
+            this.printField();
+            System.out.print("Move: ");
+            String first = s.next().toLowerCase();
+            if(first.equals("quit") || first.equals("exit")) return "quit";
+            else if(first.equals("flag")) flag = true;
+            int x = -1;
+            int y = -1;
+            if(!flag){
+                try{
+                    x = Integer.parseInt(first);
+                } catch(NumberFormatException e){
+                    continue;
+                }
+            }
+            while((x == -1 || y == -1) && s.hasNext()){
+                try{
+                    if(x == -1) x = Integer.parseInt(s.next());
+                    else{
+                        y = Integer.parseInt(s.next());
+                    }
+                } catch(NumberFormatException e){
+                    continue;
+                }
+            }
+            if((x >= 0 && x < this.field[0].length) && (y >= 0 && y < this.field.length) && this.field[y][x].equals(" ")){
+                if(flag){
+                    this.flag(new int[]{x,y});
+                    continue;
+                }
+                else{
+                    this.updateField(new int[]{x,y});
+                }
+            }
+            else{
+                continue;
+            }   
+            if(this.lives == 0) return "lost";
+        }
+        return "won";
     }
 
     /**
@@ -239,8 +315,11 @@ public class MineSweeper
     public void updateField(int[] place){
         // first check if place is where a bomb is
         if(this.bomb(place)){
-            this.addBombSpots();
+            //this.addBombSpots();
             this.lives--;
+            return;
+        }
+        if(this.field[place[0]][place[1]] == "F"){
             return;
         }
         // otherwise get the number of bombs arround place
@@ -253,13 +332,14 @@ public class MineSweeper
             ArrayList<int[]> placesArr = this.placesArround(place);
             Iterator<int[]> itr = placesArr.iterator();
             while(itr.hasNext()){
-                this.updateField(itr.next());
+                int[] cur = itr.next();
+                if(this.field[place[0]][place[1]].equals(" ")) this.updateField(cur);
             } 
         }
         // otherwise put the number of bombs arround the given place
         //      on the field at the given place
         else{
-            this.field[place[0]][place[1]] = Integer.toString(this.bombsArround(place));
+            this.field[place[0]][place[1]] = Integer.toString(bombsArr);
         }
     }
 
@@ -344,7 +424,12 @@ public class MineSweeper
      */
     public int bombsArround(int[] place){
         int count = 0;
-        if(place[0] == 0){
+        ArrayList<int[]> placesArr = this.placesArround(place);
+        Iterator<int[]> itr = placesArr.iterator();
+        while(itr.hasNext()){
+            count = this.bomb(itr.next()) ? count++ : count;
+        }
+        /*if(place[0] == 0){
             if(place[1] == 0){
                 if(this.bomb(new int[]{0,1})) count++;
                 if(this.bomb(new int[]{1,1})) count++;
@@ -405,7 +490,7 @@ public class MineSweeper
             if(this.bomb(new int[]{place[0]+1,place[1]+1})) count++;
             if(this.bomb(new int[]{place[0]+1,place[1]})) count++;
             if(this.bomb(new int[]{place[0]+1,place[1]-1})) count++;
-        }
+        }*/
         return count;
     }
 
@@ -443,7 +528,7 @@ public class MineSweeper
         // checks if all spots on the board except the bombs have been uncovered
         for(int i=0;i<9;i++){
             for(int j=0;j<9;j++){
-                if(!this.bomb(new int[]{i,j}) && this.field[i][j].equals(" ")){
+                if(!this.bomb(new int[]{i,j}) && (this.field[i][j].equals(" ") || this.field[i][j].equals("F"))){
                     return false;
                 }
             }
