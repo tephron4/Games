@@ -52,6 +52,9 @@ public class Human
         this.oLosses = 0;
         this.oTies = 0;
         this.oGamesPlayed = 0;
+        this.mWins = 0;
+        this.mLosses = 0;
+        this.mGamesPlayed = 0;
     }
     
     /**
@@ -131,17 +134,6 @@ public class Human
             }
         }
         return mv;
-    }
-    
-    /**
-     * A method for getting the player's MineSweeper move
-     * 
-     * @return an integer array with the coordinates of where they want to move
-     */
-    public int[] mPlay(){
-        int[] move = new int[2];
-        
-        return move;
     }
     
     /**
