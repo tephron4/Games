@@ -1,6 +1,6 @@
 # Games
 
-Java program for playing various games.
+Java program for playing various games solo or against the computer based on the game.
 
 ## Supported Games:
 * Othelo
